@@ -1,0 +1,28 @@
+.bulletinContainer {
+    width: 100%;
+    /* overflow: hidden; */
+    /* white-space: nowrap; */
+    /* box-sizing: border-box; */
+    position: relative;
+}
+
+.bulletinContent {
+    display: inline;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation-name: scroll-left;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
