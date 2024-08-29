@@ -40,9 +40,9 @@ export default function Home() {
 	}
 
 	return (
-		<div className="flex lg:flex-row md:flex-col sm:flex-col phone-lg:flex-col phone-md:flex-col phone-sm:flex-col">
+		<div className="flex w-full lg:flex-row md:flex-col sm:flex-col phone-lg:flex-col phone-md:flex-col phone-sm:flex-col">
 			<ClientOnlySidebar />
-			<div className="flex flex-col sm:max-w-screen-md phone-lg:max-w-screen-sm phone-md:max-w-screen-sm phone-sm:max-w-screen-sm">
+			<div className="flex flex-col flex-grow  ">
 				<Chips />
 				<Top />
 				<Subscribe />

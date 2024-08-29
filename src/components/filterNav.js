@@ -33,13 +33,13 @@ export default function Filter() {
 	];
 
 	return (
-		<div className="w-full flex flex-col lg:flex-row md:flex-col sm:flex-col justify-center items-center my-5">
-			<div className="w-fit flex justify-between items-center sm:px-5">
-				<div className="flex flex-row ">
+		<div className="w-full py-5 flex flex-col lg:flex-row md:flex-col sm:flex-col justify-center items-center my-5 gap-4">
+			<div className="w-5/6 flex flex-col lg:flex-row gap-4 justify-between items-center sm:px-4 lg:gap-6">
+				<div className="flex flex-wrap gap-4">
 					{filterOptions.map((option, index) => (
 						<div
 							key={index}
-							className={`lg:px-2 cursor-pointer lg:text-lg sm:text-xs sm:px-2 ${
+							className={`cursor-pointer text-sm lg:text-base ${
 								selectedIndex === index
 									? "font-bold border-b-2 border-red-500 transition-colors"
 									: "text-black"
@@ -51,7 +51,7 @@ export default function Filter() {
 					))}
 				</div>
 				<input
-					className="rounded-md border text-black px-3 h-fit lg:w-96 lg:text-lg sm:text-sm sm:w-52"
+					className="rounded-md border text-black px-3 h-fit md:w-96 lg:w-80 lg:text-base sm:w-40 sm:text-xs"
 					placeholder="Search"
 					onChange={handleChange}
 				/>
