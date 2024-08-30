@@ -4,7 +4,7 @@ import ReduxProvider from "@/redux/storeProvider";
 import "./globals.css";
 
 const fontSans = FontSans({
-	subsets: ["latin"],
+	subsets: ["cyrillic"],
 	variable: "--font-sans",
 });
 
