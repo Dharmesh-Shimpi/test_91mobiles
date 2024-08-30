@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchArticles, applyFilter } from "@/redux/fetch.redux";
-import Top from "@/components/top";
-import Subscribe from "@/components/subscribe";
-import Main from "@/components/main";
+import TopAndMain from "@/components/main";
 import Sidebar from "@/components/ui/filterCategory";
-import Chips from "@/components/ui/chips";
+import Filter from "@/components/filterNav";
+import Featured from "@/components/featured";
 
 function ClientOnlySidebar() {
 	const [isClient, setIsClient] = useState(false);
@@ -40,13 +39,16 @@ export default function Home() {
 	}
 
 	return (
-		<div className="flex w-full lg:flex-row md:flex-col sm:flex-col phone-lg:flex-col phone-md:flex-col phone-sm:flex-col">
-			<ClientOnlySidebar />
-			<div className="flex flex-col flex-grow  ">
-				<Chips />
-				<Top />
-				<Subscribe />
-				<Main />
+		<div className="w-screen flex flex-col items-center">
+			<Featured />
+			<Filter />
+			<div className="flex flex-col lg:flex-row lg:justify-between w-full">
+				<div className="w-full lg:w-auto flex justify-center lg:justify-start">
+					<ClientOnlySidebar />
+				</div>
+				<div className="flex flex-col flex-grow">
+					<TopAndMain />
+				</div>
 			</div>
 		</div>
 	);

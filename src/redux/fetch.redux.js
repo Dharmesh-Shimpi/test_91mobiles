@@ -94,22 +94,24 @@ const fetchSlice = createSlice({
 		},
 		setCheckedItems: (state, action) => {
 			state.checkedItems = action.payload;
+			state.page = 1;
+			state.filteredData = [];
 		},
 		applyFilter: (state) => {
 			const { filters, name, data, checkedItems } = state;
 			let filteredData = [...data];
 
-			if (filters !== null) {
-				if (filters === "All Articles") {
-					// No filtering needed for "All Articles"
-				} else if (filters === "Hot Deals") {
-					filteredData = filteredData.filter((item) => item.tags.includes(1));
-				} else if (filters === "Popular Comparison") {
-					filteredData = filteredData.filter((item) => item.tags.includes(2));
-				} else if (filters === "Upcoming Gadgets") {
-					filteredData = filteredData.filter((item) => item.tags.includes(3));
-				} else if (filters === "Latest Gadgets") {
-					filteredData = filteredData.filter((item) => item.tags.includes(4));
+			if (filters) {
+				const tagFilters = {
+					"Hot Deals": 1,
+					"Popular Comparison": 2,
+					"Upcoming Gadgets": 3,
+					"Latest Gadgets": 4,
+				};
+				if (tagFilters[filters]) {
+					filteredData = filteredData.filter((item) =>
+						item.tags.includes(tagFilters[filters])
+					);
 				}
 			}
 
@@ -147,8 +149,7 @@ const fetchSlice = createSlice({
 				} else {
 					state.data = [...state.data, ...action.payload];
 				}
-				state.filteredData = action.payload;
-				state.filters && state.filteredData.length > 0 && state.applyFilter();
+				// Do not call applyFilter here
 			})
 			.addCase(fetchArticles.rejected, (state, action) => {
 				state.loading = false;

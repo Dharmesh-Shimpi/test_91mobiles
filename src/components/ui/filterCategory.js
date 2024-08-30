@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	setCheckedItems,
@@ -18,18 +18,32 @@ import {
 	SheetTrigger,
 } from "./sheet";
 
-
 export default function Sidebar() {
 	const dispatch = useDispatch();
 	const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
-	const { checkedItems, categories, brands } = useSelector(
+	const { checkedItems, categories, brands, name } = useSelector(
 		(state) => state.fetch
 	);
+
+	const [searchTerm, setSearchTerm] = useState("");
+	const [filteredBrands, setFilteredBrands] = useState(brands);
 
 	useEffect(() => {
 		dispatch(fetchCategories());
 		dispatch(fetchBrands());
 	}, [dispatch]);
+
+	useEffect(() => {
+		dispatch(applyFilter());
+	}, [dispatch, checkedItems, name]);
+
+	useEffect(() => {
+		setFilteredBrands(
+			brands.filter((brand) =>
+				brand.name.toLowerCase().includes(searchTerm.toLowerCase())
+			)
+		);
+	}, [searchTerm, brands]);
 
 	const handleCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
@@ -40,7 +54,6 @@ export default function Sidebar() {
 				: checkedItems[name].filter((item) => item !== value),
 		};
 		dispatch(setCheckedItems(updatedCheckedItems));
-		dispatch(applyFilter());
 	};
 
 	const handleClearAll = () => {
@@ -49,11 +62,14 @@ export default function Sidebar() {
 			brand: [],
 		};
 		dispatch(setCheckedItems(clearedCheckedItems));
-		dispatch(applyFilter());
+	};
+
+	const handleSearchChange = (event) => {
+		setSearchTerm(event.target.value);
 	};
 
 	const sidebarContent = (
-		<div className="ml-5 p-4 w-56 h-fit bg-gray-100 border border-gray-300 rounded-lg">
+		<div className="ml-5 h-fit p-4 w-56 bg-gray-100 border border-gray-300 rounded-lg">
 			<div className="flex items-center justify-between mb-4">
 				<h2 className="text-xl font-bold">Filters</h2>
 				<button
@@ -85,8 +101,15 @@ export default function Sidebar() {
 			</div>
 			<div>
 				<h3 className="text-lg font-semibold mb-2">Brands</h3>
+				<input
+					type="text"
+					placeholder="Search brands..."
+					value={searchTerm}
+					onChange={handleSearchChange}
+					className="w-full p-2 mb-4 border border-gray-300 rounded"
+				/>
 				<ul className="space-y-2">
-					{brands.map((brand) => (
+					{filteredBrands.map((brand) => (
 						<li key={brand.brand_id}>
 							<label className="inline-flex items-center">
 								<input
@@ -107,19 +130,13 @@ export default function Sidebar() {
 	);
 
 	return (
-		<div className="flex">
+		<div className="relative">
 			{isMobile ? (
 				<Sheet>
-					<SheetTrigger className="p-4 bg-blue-500 text-white rounded-lg w-fit h-fit">
-						Filters
+					<SheetTrigger className="p-2 bg-blue-500 text-white rounded-lg w-fit h-fit">
+						Additional filters
 					</SheetTrigger>
-					<SheetContent className="w-full ">
-						<SheetHeader>
-							<SheetTitle>Filters</SheetTitle>
-							<SheetDescription>
-								Use these filters to refine your search.
-							</SheetDescription>
-						</SheetHeader>
+					<SheetContent className="w-full overflow-scroll">
 						{sidebarContent}
 					</SheetContent>
 				</Sheet>

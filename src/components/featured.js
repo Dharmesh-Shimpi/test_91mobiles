@@ -2,21 +2,21 @@ import { json } from "@/dummyJson";
 
 export default function Featured() {
 	return (
-		<section className="p-5 flex justify-center items-center bg-slate-100">
-			<div className="w-7/8 flex md:flex-row lg:flex-row sm:flex-col phone-lg:flex-col phone-md:flex-col phone-sm:flex-col">
+		<section className="py-10 w-screen flex justify-center items-center bg-slate-100 overflow-hidden">
+			<div className="w-full phone-sm:mx-0 phone-md: phone-lg:w-full sm:w-full md:w-7/8 lg:w-7/8 xl:w-7/8 flex flex-col md:flex-row gap-4 px-4">
 				{/* Featured Section */}
-				<div className="m-1 flex flex-col flex-grow flex-shrink">
+				<div className="phone-sm:w-full phone-md:w-full phone-lg:w-full sm:w-full md:w-1/2 lg:w-1/2 xl:1/2 rounded-xl flex-grow flex-shrink">
 					<div className="border-l-4 px-3 font-bold border-blue-500 my-5 text-xl phone-lg:text-lg phone-md:text-md phone-sm:text-sm">
 						FEATURED
 					</div>
-					<div className="relative overflow-hidden md:h-[400px] md:w-[500px] rounded-xl sm:h-[300px] sm:w-[350px] phone-lg:h-[250px] phone-lg:w-[300px] phone-md:h-[200px] phone-md:w-[250px] phone-sm:h-[150px] phone-sm:w-[200px]">
+					<div className="relative overflow-hidden rounded-xl w-full">
 						<img
 							src="https://m.media-amazon.com/images/I/71zFdS29uFL._SX679_.jpg"
 							alt="Featured"
 							className="object-cover w-full h-full"
 						/>
 						<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black">
-							<div className="p-2 text-white text-sm phone-lg:text-xs phone-md:text-xs phone-sm:text-xxs">
+							<div className="p-2 text-white text-sm phone-lg:text-xs phone-md:text-xs phone-sm:text-xxs line-clamp-2">
 								TCL 108 cm (43 inches) Metallic Bezel-Less Series 4K Ultra HD
 								Smart LED Google TV 43V6B (Black)
 							</div>
@@ -27,15 +27,19 @@ export default function Featured() {
 					</div>
 				</div>
 				{/* Daily Section */}
-				<div className="flex flex-col flex-grow flex-shrink max-w-fit">
+				<div className="phone-sm:w-full phone-md:w-full phone-lg:w-full sm:w-full md:w-1/2 lg:w-1/2 xl:1/2 flex-grow flex-shrink">
 					<div className="border-l-4 px-3 font-bold border-blue-500 my-5 text-xl phone-lg:text-lg phone-md:text-md phone-sm:text-sm">
 						DAILY
 					</div>
-					<div className="flex flex-wrap gap-2">
+					<div className="flex flex-wrap gap-4 items-center justify-center">
 						{json.map((item, index) => (
 							<div
 								key={index}
-								className="relative overflow-hidden rounded-xl border flex-grow flex-shrink md:h-[200px] md:w-[300px] phone-lg:h-[180px] phone-lg:w-[230px] phone-md:h-[150px] phone-md:w-[200px] phone-sm:h-[120px] phone-sm:w-[180px]"
+								className="relative overflow-hidden rounded-xl border w-full"
+								style={{
+									width: "calc(50% - 0.5rem)",
+									height: "calc((33vw - 0.5rem) * 0.5)",
+								}}
 							>
 								<img
 									src={item.img}
@@ -43,10 +47,10 @@ export default function Featured() {
 									className="object-cover w-full h-full"
 								/>
 								<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-black">
-									<div className="text-white text-xs phone-lg:text-xxs phone-md:text-xxs phone-sm:text-xxs">
+									<div className="text-white text-xs phone-lg:text-xxs phone-md:text-xxs phone-sm:text-xxs line-clamp-2">
 										{item.desc}
 									</div>
-									<div className="text-white text-xs phone-lg:text-xxs phone-md:text-xxs phone-sm:text-xxs">
+									<div className="text-white text-xs phone-lg:text-xxs phone-md:text-xxs phone-sm:text-xxs line-clamp-2">
 										{item.text}
 									</div>
 								</div>

@@ -11,8 +11,11 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",
     "@reduxjs/toolkit": "^2.2.7",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "html-react-parser": "^5.1.15",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.436.0",
     "next": "14.2.6",
     "react": "^18",

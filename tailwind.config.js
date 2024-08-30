@@ -69,8 +69,11 @@ module.exports = {
 			},
 			screens: {
 				"phone-sm": "320px",
-				"phone-md": "375px", 
-				"phone-lg": "425px", 
+				"phone-md": "375px",
+				"phone-lg": "425px",
+			},
+			fontSize: {
+				xxs: "10px",
 			},
 		},
 	},
