@@ -18,14 +18,14 @@ export default function TopAndMain() {
 	};
 
 	return (
-		<div className="w-full flex flex-col items-center border">
+		<div className="w-full flex flex-col items-center">
 			{/* Section for top eight items */}
 			<div className="flex flex-col items-center w-full max-w-[1200px] mb-6">
 				<div className="flex flex-wrap justify-center items-center w-full">
 					{topEight.map((item) => (
 						<div
 							key={item.article_id}
-							className="border text-sm w-64 m-2 h-96 rounded-lg flex flex-col overflow-hidden cursor-pointer"
+							className="border text-sm w-60 m-2 h-96 rounded-lg flex flex-col overflow-hidden cursor-pointer"
 							onClick={() => handleClick(item.slug)}
 						>
 							<div className="h-3/4 w-full">
@@ -58,7 +58,7 @@ export default function TopAndMain() {
 					{restData.map((item) => (
 						<div
 							key={item.article_id}
-							className="border text-sm w-80 m-5 h-96 rounded-lg flex flex-col overflow-hidden cursor-pointer"
+							className="border text-sm w-60 m-2 h-96 rounded-lg flex flex-col overflow-hidden cursor-pointer"
 							onClick={() => handleClick(item.slug)}
 						>
 							<div className="h-3/4 w-full">

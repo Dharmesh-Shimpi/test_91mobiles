@@ -39,7 +39,7 @@ export default function Home() {
 	}
 
 	return (
-		<div className="w-screen flex flex-col items-center">
+		<div className="w-screen sm:px-0 md:px-16 flex flex-col items-center">
 			<Featured />
 			<Filter />
 			<div className="flex flex-col lg:flex-row lg:justify-between w-full">
