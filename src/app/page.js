@@ -1,42 +1,17 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchArticles, applyFilter } from "@/redux/fetch.redux";
+import {
+	fetchArticles,
+	fetchBrands,
+	fetchCategories,
+} from "@/utils/fetchArticles";
+import Featured from "@/components/featured";
 import TopAndMain from "@/components/main";
 import Sidebar from "@/components/ui/filterCategory";
 import Filter from "@/components/filterNav";
-import Featured from "@/components/featured";
 
-function ClientOnlySidebar() {
-	const [isClient, setIsClient] = useState(false);
-
-	useEffect(() => {
-		setIsClient(true);
-	}, []);
-
-	if (!isClient) {
-		return null;
-	}
-
-	return <Sidebar />;
-}
-
-export default function Home() {
-	const dispatch = useDispatch();
-	const { filters, loading } = useSelector((state) => state.fetch);
-
-	useEffect(() => {
-		dispatch(fetchArticles({}));
-	}, [dispatch]);
-
-	useEffect(() => {
-		dispatch(applyFilter());
-	}, [dispatch, filters]);
-
-	if (loading) {
-		return <div>Loading...</div>;
-	}
+export default async function Home() {
+	const initialArticles = await fetchArticles(1, 3);
+	const categories = await fetchCategories();
+	const brands = await fetchBrands();
 
 	return (
 		<div className="w-screen sm:px-0 md:px-16 flex flex-col items-center">
@@ -44,10 +19,10 @@ export default function Home() {
 			<Filter />
 			<div className="flex flex-col lg:flex-row lg:justify-between w-full">
 				<div className="w-full lg:w-auto flex justify-center lg:justify-start">
-					<ClientOnlySidebar />
+					<Sidebar categories={categories} brands={brands} />
 				</div>
 				<div className="flex flex-col flex-grow">
-					<TopAndMain />
+					<TopAndMain initialData={initialArticles} />
 				</div>
 			</div>
 		</div>

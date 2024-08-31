@@ -154,7 +154,6 @@ export default function ArticleLayout({ params }) {
 						</div>
 					</div>
 				</div>
-
 				<div className="phone-sm:w-full md:w-[350px] phone-sm:m-0 md:mx-16">
 					<div className="bg-white shadow-lg rounded-lg phone-sm:p-4 md:p-6 scrollable-container">
 						<p className="mb-4 bg-red-600 text-white text-xs w-fit py-1 px-3 font-medium">

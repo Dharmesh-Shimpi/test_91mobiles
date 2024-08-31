@@ -1,3 +1,5 @@
+"use server";
+
 export const fetchWithAuth = async (url) => {
 	try {
 		const response = await fetch(url, {

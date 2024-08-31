@@ -8,22 +8,6 @@ export default function Filter() {
 	const dispatch = useDispatch();
 	const [selectedIndex, setSelectedIndex] = useState(null);
 
-	const handleClick = (index) => {
-		setSelectedIndex(index);
-		const filterOptions = [
-			"Hot Deals",
-			"Popular Comparison",
-			"Upcoming Gadgets",
-			"Latest Gadgets",
-			"All Articles",
-		];
-		dispatch(setFilters(filterOptions[index]));
-	};
-
-	const handleChange = (e) => {
-		dispatch(setName(e.target.value));
-	};
-
 	const filterOptions = [
 		"Hot Deals",
 		"Popular Comparison",
@@ -31,6 +15,15 @@ export default function Filter() {
 		"Latest Gadgets",
 		"All Articles",
 	];
+
+	const handleClick = (index) => {
+		setSelectedIndex(index);
+		dispatch(setFilters(filterOptions[index])); // Use setFilters to filter articles based on selected option
+	};
+
+	const handleChange = (e) => {
+		dispatch(setName(e.target.value)); // Dispatch setName action for search
+	};
 
 	return (
 		<div className="w-full py-5 flex flex-col lg:flex-row md:flex-col sm:flex-col justify-center items-center my-5 gap-4">
@@ -51,7 +44,7 @@ export default function Filter() {
 					))}
 				</div>
 				<input
-					className="rounded-md border text-black px-3 h-8 sm:w-40 sm:text-xs md:w-96 lg:w-80 lg:text-base "
+					className="rounded-md border text-black px-3 h-8 sm:w-40 sm:text-xs md:w-96 lg:w-80 lg:text-base"
 					placeholder="Search"
 					onChange={handleChange}
 				/>

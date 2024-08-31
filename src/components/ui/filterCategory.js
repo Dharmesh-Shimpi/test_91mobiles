@@ -2,36 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	setCheckedItems,
-	applyFilter,
-	fetchCategories,
-	fetchBrands,
-} from "@/redux/fetch.redux";
+import { setCheckedItems, applyFilter } from "@/redux/fetch.redux";
 import { useMediaQuery } from "react-responsive";
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "./sheet";
+import { Sheet, SheetContent, SheetTrigger } from "./sheet";
 
-export default function Sidebar() {
+export default function Sidebar({ categories, brands }) {
 	const dispatch = useDispatch();
 	const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
-	const { checkedItems, categories, brands, name } = useSelector(
-		(state) => state.fetch
-	);
+	const { checkedItems, name } = useSelector((state) => state.fetch);
 
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredBrands, setFilteredBrands] = useState(brands);
-
-	useEffect(() => {
-		dispatch(fetchCategories());
-		dispatch(fetchBrands());
-	}, [dispatch]);
 
 	useEffect(() => {
 		dispatch(applyFilter());
