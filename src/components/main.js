@@ -1,55 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	setArticles,
-	applyFilter,
-	setPage,
-	setLoading,
-} from "@/redux/fetch.redux";
-import { fetchArticles } from "@/utils/fetchArticles";
+import { setArticles, setFilters } from "@/redux/fetch.redux";
+import { useRouter } from "next/navigation";
+import { updateCookieWithSlug } from "@/utils/cookies";
 import Subscribe from "@/components/subscribe";
 
 export default function TopAndMain({ initialData }) {
+	const router = useRouter();
 	const dispatch = useDispatch();
-	const { filteredData, articles, loading, hasMore } = useSelector(
-		(state) => state.fetch
-	);
-
-	const [localPage, setLocalPage] = useState(4); // Start at page 4 as per initial assumption
+	const { filteredData, filter } = useSelector((state) => state.fetch);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			if (initialData && Array.isArray(initialData)) {
-				dispatch(setArticles(initialData));
-			}
-
-			if (hasMore && !loading) {
-				try {
-					dispatch(setPage(localPage));
-					const moreArticles = await fetchArticles(localPage, 1); // Load one page at a time
-					dispatch(
-						setArticles((prevArticles) => [...prevArticles, ...moreArticles])
-					);
-					setLocalPage((prevPage) => prevPage + 1);
-				} catch (error) {
-					console.error("Error loading more articles:", error);
-				}
-			}
-		};
-
-		fetchData();
-	}, [initialData, localPage, hasMore, loading, dispatch]);
+		dispatch(setArticles(initialData));
+	}, [initialData, dispatch]);
 
 	useEffect(() => {
-		if (articles.length > 0) {
-			dispatch(applyFilter()); // Apply filters whenever articles or filters change
-		}
-	}, [articles, dispatch]);
+		dispatch(setFilters(filter));
+	}, [dispatch, filter, initialData]);
 
 	const handleClick = (slug) => {
-		// Handle click functionality here
+		updateCookieWithSlug("slugs", slug);
+		router.push(`/${slug}`);
 	};
 
 	return (
@@ -86,7 +59,10 @@ export default function TopAndMain({ initialData }) {
 			</div>
 
 			{/* Subscribe component */}
-			<Subscribe />
+			<div className="w-full flex justify-center items-center">
+				{" "}
+				<Subscribe />
+				</div>
 
 			{/* Remaining items */}
 			<div className="w-full flex flex-col items-center">
@@ -107,7 +83,7 @@ export default function TopAndMain({ initialData }) {
 								</div>
 								<div className="bg-slate-100 p-3 flex flex-col justify-between h-1/4">
 									<div className="font-bold text-center line-clamp-2">
-											{item.title}
+										{item.title}
 									</div>
 									<div className="flex justify-between text-xs">
 										<p>30 sec read</p>

@@ -27,20 +27,20 @@ const sheetVariants = cva(
   {
     variants: {
       side: {
+        left:
+          "inset-y-0 left-0 w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
         bottom:
           "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-        // Remove or comment out the left variant if not needed
-        // left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
       },
     },
     defaultVariants: {
-      side: "bottom", // Default to bottom if no side is provided
+      side: "left", // Default to left if no side is provided
     },
   }
 );
 
 const SheetContent = React.forwardRef(
-  ({ side = "bottom", className, children, ...props }, ref) => (
+  ({ side = "left", className, children, ...props }, ref) => (
     <SheetPortal>
       <SheetOverlay />
       <SheetPrimitive.Content

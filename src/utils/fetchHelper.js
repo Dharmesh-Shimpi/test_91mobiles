@@ -1,4 +1,4 @@
-"use server";
+// "use server";
 
 export const fetchWithAuth = async (url) => {
 	try {

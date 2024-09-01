@@ -1,21 +1,23 @@
+"use client";
+
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCheckedItems, applyFilter } from "@/redux/fetch.redux";
+import { setCheckedItems } from "@/redux/fetch.redux";
 
 const Chips = () => {
 	const dispatch = useDispatch();
-	const { checkedItems, categories, brands } = useSelector(
-		(state) => state.fetch
-	);
+	const { checkedItems } = useSelector((state) => state.fetch);
 
 	const getCategoryName = (id) => {
-		const category = categories.find((cat) => cat.category_id === id);
-		return category ? category.name : id;
+		const { category } = checkedItems;
+		return category.find((cat) => cat.category_id === id);
+		console.log(category);
 	};
 
 	const getBrandName = (id) => {
-		const brand = brands.find((br) => br.brand_id === id);
-		return brand ? brand.name : id;
+		const { brand } = checkedItems;
+		const item = brand.find((br) => br.brand_id === id);
+		console.log(item);
 	};
 
 	const handleRemove = (type, value) => {
@@ -24,13 +26,13 @@ const Chips = () => {
 			[type]: checkedItems[type].filter((item) => item !== value),
 		};
 		dispatch(setCheckedItems(updatedCheckedItems));
-		dispatch(applyFilter());
 	};
 
 	return (
 		<div className="flex flex-wrap gap-2 p-2 h-fit w-fit">
 			{Object.keys(checkedItems).map((type) =>
 				checkedItems[type].map((item) => (
+					
 					<div
 						key={`${type}-${item}`}
 						className="flex items-center bg-blue-200 text-blue-800 rounded-lg px-3 py-1 text-sm"

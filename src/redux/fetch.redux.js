@@ -12,18 +12,19 @@ const fetchSlice = createSlice({
 		hasMore: true,
 		loading: false,
 		name: "",
-		filter: "All Articles", // Initialize with default filter
+		filter: "All Articles",
 	},
 	reducers: {
 		setArticles(state, action) {
-			state.articles = Array.isArray(action.payload) ? action.payload : [];
-			state.filteredData = state.articles; // Set filtered data to initial articles
+			state.articles = action.payload;
+			state.filteredData = state.articles;
 		},
 		setCheckedItems(state, action) {
 			state.checkedItems = action.payload;
 			state.page = 1;
-			state.filteredData = [];
-			applyFilter(state); // Call applyFilter after setting checked items
+			state.name = ""; 
+			state.filter = "All Articles"; 
+			state.filteredData = applyFilter(state);
 		},
 		setPage(state, action) {
 			state.page = action.payload;
@@ -40,55 +41,54 @@ const fetchSlice = createSlice({
 		setFilters(state, action) {
 			state.filter = action.payload;
 			state.page = 1;
-			state.filteredData = [];
-			applyFilter(state); // Call applyFilter after setting filters
+			state.filteredData = applyFilter(state);
 		},
 		setName(state, action) {
 			state.name = action.payload;
 			state.page = 1;
-			state.filteredData = [];
-			applyFilter(state); // Call applyFilter after setting name
-		},
-		applyFilter(state) {
-			const { filter, name, articles, checkedItems } = state;
-			let filteredData = [...articles];
-
-			if (filter !== "All Articles") {
-				const tagFilters = {
-					"Hot Deals": 1,
-					"Popular Comparison": 2,
-					"Upcoming Gadgets": 3,
-					"Latest Gadgets": 4,
-				};
-				if (tagFilters[filter]) {
-					filteredData = filteredData.filter((item) =>
-						item.tags.includes(tagFilters[filter])
-					);
-				}
-			}
-
-			if (name) {
-				filteredData = filteredData.filter((item) =>
-					item.title.toLowerCase().includes(name.toLowerCase())
-				);
-			}
-
-			if (checkedItems.category.length > 0) {
-				filteredData = filteredData.filter((item) =>
-					checkedItems.category.includes(item.category)
-				);
-			}
-
-			if (checkedItems.brand.length > 0) {
-				filteredData = filteredData.filter((item) =>
-					item.brands.some((brand) => checkedItems.brand.includes(brand))
-				);
-			}
-
-			state.filteredData = filteredData;
+			state.filteredData = applyFilter(state);
 		},
 	},
 });
+
+const applyFilter = (state) => {
+	const { filter, name, articles, checkedItems } = state;
+	let filteredData = [...articles];
+
+	if (filter !== "All Articles") {
+		const tagFilters = {
+			"Hot Deals": 1,
+			"Popular Comparison": 2,
+			"Upcoming Gadgets": 3,
+			"Latest Gadgets": 4,
+		};
+		if (tagFilters[filter]) {
+			filteredData = filteredData.filter((item) =>
+				item.tags.includes(tagFilters[filter])
+			);
+		}
+	}
+
+	if (name) {
+		filteredData = filteredData.filter((item) =>
+			item.title.toLowerCase().includes(name.toLowerCase())
+		);
+	}
+
+	if (checkedItems.category.length > 0) {
+		filteredData = filteredData.filter((item) =>
+			checkedItems.category.includes(item.category)
+		);
+	}
+
+	if (checkedItems.brand.length > 0) {
+		filteredData = filteredData.filter((item) =>
+			item.brands.some((brand) => checkedItems.brand.includes(brand))
+		);
+	}
+
+	return filteredData;
+};
 
 export const {
 	setArticles,
@@ -99,7 +99,6 @@ export const {
 	setBrands,
 	setFilters,
 	setName,
-	applyFilter,
 } = fetchSlice.actions;
 
 export default fetchSlice.reducer;
