@@ -14,20 +14,18 @@ import {
 	LinkedinIcon,
 } from "react-share";
 import { IoArrowRedo } from "react-icons/io5";
-import InfiniteScroll from "react-infinite-scroll-component";
 import "./style.css";
 
 export default function ArticleLayout({ params }) {
 	const [article, setArticle] = useState(null);
-	const [relatedArticles, setRelatedArticles] = useState([]);
 	const [showShareOptions, setShowShareOptions] = useState(false);
-	const [hasMore, setHasMore] = useState(true);
-	const [page, setPage] = useState(1);
-
 	const { slug } = params;
 	const router = useRouter();
-	const { data } = useSelector((state) => state.fetch);
-	const category = data.find((item) => item.slug === slug)?.category;
+	const { articles } = useSelector((state) => state.fetch);
+	const category = articles.find((item) => item.slug === slug)?.category;
+	const relatedArticles = articles.filter(
+		(item) => item.category === category && item.slug !== slug
+	);
 
 	useEffect(() => {
 		async function getDetails() {
@@ -36,13 +34,6 @@ export default function ArticleLayout({ params }) {
 					`http://13.200.221.80:8000/api/articlesbyslug/${slug}`
 				);
 				setArticle(temp);
-
-				if (category) {
-					const initialRelated = data
-						.filter((item) => item.category === category && item.slug !== slug)
-						.slice(0, 10);
-					setRelatedArticles(initialRelated);
-				}
 			} catch (error) {
 				console.error("Failed to fetch article:", error);
 			}
@@ -50,25 +41,11 @@ export default function ArticleLayout({ params }) {
 		if (slug) {
 			getDetails();
 		}
-	}, [slug, category, data]);
+	}, [slug, category, articles]);
 
 	const handleArticleClick = (newSlug) => {
 		updateCookieWithSlug("slugs", newSlug);
 		router.push(`/${newSlug}`);
-	};
-
-	const fetchMoreArticles = () => {
-		const nextPage = page + 1;
-		const additionalArticles = data
-			.filter((item) => item.category === category && item.slug !== slug)
-			.slice(page * 10, nextPage * 10);
-
-		if (additionalArticles.length === 0) {
-			setHasMore(false);
-		} else {
-			setRelatedArticles((prev) => [...prev, ...additionalArticles]);
-			setPage(nextPage);
-		}
 	};
 
 	const shareUrl = typeof window !== "undefined" ? window.location.href : "";
@@ -145,41 +122,46 @@ export default function ArticleLayout({ params }) {
 							{article.content2 && (
 								<div dangerouslySetInnerHTML={{ __html: article.content2 }} />
 							)}
+							<div className="flex justify-center items-center">
+								<img
+									src={article.image_url1}
+									alt={article.title}
+									className="mb-6 rounded-lg"
+								/>
+							</div>
 							{article.content3 && (
 								<div dangerouslySetInnerHTML={{ __html: article.content3 }} />
 							)}
+							<div className="flex justify-center items-center">
+								<img
+									src={article.image_url2}
+									alt={article.title}
+									className="mb-6 rounded-lg"
+								/>
+							</div>
 							{article.content4 && (
 								<div dangerouslySetInnerHTML={{ __html: article.content4 }} />
 							)}
 						</div>
 					</div>
 				</div>
-
 				<div className="phone-sm:w-full md:w-[350px] phone-sm:m-0 md:mx-16">
 					<div className="bg-white shadow-lg rounded-lg phone-sm:p-4 md:p-6 scrollable-container">
 						<p className="mb-4 bg-red-600 text-white text-xs w-fit py-1 px-3 font-medium">
 							RELATED ARTICLES
 						</p>
-						<InfiniteScroll
-							dataLength={relatedArticles.length}
-							next={fetchMoreArticles}
-							hasMore={hasMore}
-							loader={<h4>Loading...</h4>}
-							endMessage={<p>No more articles</p>}
-							className="space-y-4"
-						>
-							{relatedArticles.map((item) => (
-								<div
-									key={item.id}
-									className="border-b-4 border-gray-300 line-clamp-3 p-4 cursor-pointer hover:bg-gray-100 transition-colors"
-									onClick={() => handleArticleClick(item.slug)}
-								>
-									<h3 className="text-sm font-semibold text-gray-800">
-										{item.title}
-									</h3>
-								</div>
-							))}
-						</InfiniteScroll>
+
+						{relatedArticles.map((item) => (
+							<div
+								key={item.id}
+								className="border-b-4 border-gray-300 line-clamp-3 p-4 cursor-pointer hover:bg-gray-100 transition-colors"
+								onClick={() => handleArticleClick(item.slug)}
+							>
+								<h3 className="text-sm font-semibold text-gray-800">
+									{item.title}
+								</h3>
+							</div>
+						))}
 					</div>
 				</div>
 			</div>
