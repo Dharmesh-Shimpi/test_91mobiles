@@ -9,7 +9,7 @@ const fontSans = FontSans({
 });
 
 export const metadata = {
-	title: "32Mobiles.com",
+	title: "MeraMobiles.com",
 	description: "Everything about mobile phones.",
 };
 
