@@ -7,6 +7,7 @@ import Featured from "@/components/featured";
 import TopAndMain from "@/components/main";
 import Sidebar from "@/components/ui/filterCategory";
 import Chips from "@/components/ui/chips";
+import Hidden from "@/components/hiddenSEO";
 import FilterSearch from "@/components/ui/filterSearch";
 
 export default async function Home() {
@@ -15,15 +16,20 @@ export default async function Home() {
 	const brands = await fetchBrands();
 
 	return (
-		<div className="w-screen sm:px-0 md:px-16 flex flex-col items-center">
-			<Featured />
+		<div className="flex flex-col items-center ">
+			<Featured
+				data={initialArticles}
+				categories={categories}
+				brands={brands}
+			/>
 			<FilterSearch categories={categories} brands={brands} />
-			<div className="flex flex-col lg:flex-row lg:justify-between w-full">
-				<div className="phone-sm:hidden md:block w-full lg:w-auto flex justify-center lg:justify-start">
+			<div className="flex flex-col md:flex-row md:justify-between w-full">
+				<div className="phone-sm:hidden lg:block w-full lg:w-auto flex justify-center lg:justify-start">
 					<Sidebar categories={categories} brands={brands} />
 				</div>
 				<div className="flex flex-col flex-grow">
 					<Chips />
+					<Hidden data={initialArticles} />
 					<TopAndMain initialData={initialArticles} />
 				</div>
 			</div>

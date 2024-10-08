@@ -25,11 +25,18 @@ export default function Sidebar({ categories, brands }) {
 
 	const handleCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
+
+		// Get the selected name based on the checkbox
+		const selectedName =
+			name === "category"
+				? categories.find((category) => category.category_id === value)?.name
+				: brands.find((brand) => brand.brand_id === value)?.name;
+
 		const updatedCheckedItems = {
 			...checkedItems,
 			[name]: checked
-				? [...checkedItems[name], value]
-				: checkedItems[name].filter((item) => item !== value),
+				? [...checkedItems[name], { id: value, name: selectedName }]
+				: checkedItems[name].filter((item) => item.id !== value),
 		};
 		dispatch(setCheckedItems(updatedCheckedItems));
 	};
@@ -43,7 +50,7 @@ export default function Sidebar({ categories, brands }) {
 	};
 
 	return (
-		<div className=" ml-5 h-fit p-4 w-56 bg-gray-100 border border-gray-300 rounded-lg">
+		<div className="ml-5 h-fit p-4 w-56 bg-gray-100 border border-gray-300 rounded-lg">
 			<div className="flex items-center justify-between mb-4">
 				<h2 className="text-xl font-bold">Filters</h2>
 				<button
@@ -63,7 +70,9 @@ export default function Sidebar({ categories, brands }) {
 									type="checkbox"
 									name="category"
 									value={category.category_id}
-									checked={checkedItems.category.includes(category.category_id)}
+									checked={checkedItems.category.some(
+										(item) => item.id === category.category_id
+									)}
 									onChange={handleCheckboxChange}
 									className="form-checkbox"
 								/>
@@ -90,7 +99,9 @@ export default function Sidebar({ categories, brands }) {
 									type="checkbox"
 									name="brand"
 									value={brand.brand_id}
-									checked={checkedItems.brand.includes(brand.brand_id)}
+									checked={checkedItems.brand.some(
+										(item) => item.id === brand.brand_id
+									)}
 									onChange={handleCheckboxChange}
 									className="form-checkbox"
 								/>

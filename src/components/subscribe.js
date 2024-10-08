@@ -3,7 +3,7 @@ import css from "./subscribe.module.css";
 export default function Subscribe() {
 	return (
 		<div
-			className={`${css.svg} w-11/12 py-10 rounded-lg flex flex-col justify-center items-center`}
+			className={`${css.svg} w-11/12 py-10 rounded-lg flex flex-col justify-center items-center overflow-hidden`}
 		>
 			<div className="text-white lg:text-xl sm:text-xs md:text-sm font-bold mb-5 text-center">
 				Subscribe to our newsletter to get updates immediately

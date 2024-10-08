@@ -18,12 +18,12 @@ export default function Filter({ categories, brands }) {
 	];
 
 	const handleClick = (index) => {
-		setSelectedIndex(index);
+		setSelectedIndex(index);	
 		dispatch(setFilters(filterOptions[index]));
 	};
 
 	return (
-		<div className="flex gap-4 phone-sm:flex-col md:flex-row">
+		<div className="flex gap-4 phone-sm:flex-col lg:flex-row">
 			{filterOptions.map((option, index) => (
 				<div
 					key={index}
@@ -37,7 +37,7 @@ export default function Filter({ categories, brands }) {
 					{option}
 				</div>
 			))}
-			<div className="phone-sm:block md:hidden">
+			<div className="phone-sm:block lg:hidden">
 				<Sidebar categories={categories} brands={brands} />
 			</div>
 		</div>

@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
 			<ReduxProvider>
 				<body
 					className={cn(
-						"flex justify-center items-center min-h-screen bg-background font-sans antialiased",
+						"font-sans antialiased",
 						fontSans.variable
 					)}
 				>

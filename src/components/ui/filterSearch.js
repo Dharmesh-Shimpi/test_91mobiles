@@ -15,9 +15,9 @@ export default function FilterSearch({ categories, brands }) {
 	};
 
 	return (
-		<div className="w-full flex p-5 justify-between items-center">
+		<div className="w-full  flex p-5 justify-between items-center">
 			{/* Desktop Filter */}
-			<div className="phone-sm:hidden md:block">
+			<div className="phone-sm:hidden lg:block">
 				<Filter categories={categories} brands={brands} />
 			</div>
 
@@ -30,9 +30,9 @@ export default function FilterSearch({ categories, brands }) {
 			{/* Mobile Sheet Trigger */}
 			<Sheet>
 				<SheetTrigger>
-					<VscSettings className="text-2xl cursor-pointer phone-sm:inline md:hidden" />
+					<VscSettings className="text-2xl cursor-pointer phone-sm:inline lg:hidden" />
 				</SheetTrigger>
-				<SheetContent className="flex  w-full overflow-scroll">
+				<SheetContent className="flex w-full overflow-scroll ">
 					<Filter categories={categories} brands={brands} />
 				</SheetContent>
 			</Sheet>

@@ -77,13 +77,17 @@ const applyFilter = (state) => {
 
 	if (checkedItems.category.length > 0) {
 		filteredData = filteredData.filter((item) =>
-			checkedItems.category.includes(item.category)
+			checkedItems.category.some(
+				(checkedItem) => checkedItem.id === item.category
+			)
 		);
 	}
 
 	if (checkedItems.brand.length > 0) {
 		filteredData = filteredData.filter((item) =>
-			item.brands.some((brand) => checkedItems.brand.includes(brand))
+			item.brands.some((brand) =>
+				checkedItems.brand.some((checkedItem) => checkedItem.id === brand)
+			)
 		);
 	}
 

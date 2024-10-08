@@ -1,57 +1,61 @@
-import { json } from "@/dummyJson";
+import Image from "next/image";
 
-export default function Featured() {
+export default function Featured({ data, categories, brands }) {
+	const category = categories.find((i) => i.name == "TV").category_id;
+
+	const featured = data
+		.filter((i) => i.category == category && i.priority == true)
+		.slice(0, 5);
+
 	return (
-		<section className="py-10 w-screen flex justify-center items-center bg-slate-100 overflow-hidden">
-			<div className="w-full sm:mx-0 md:mx-5 lg:mx-16 phone-lg:w-full sm:w-full md:w-7/8 lg:w-7/8 xl:w-7/8 flex flex-col md:flex-row gap-4 px-4">
+		<section className="py-10 w-full flex justify-center items-center bg-slate-100 overflow-hidden">
+			<div className="w-full flex flex-col md:flex-row gap-4 px-4 md:px-5 lg:px-16">
 				{/* Featured Section */}
-				<div className="phone-sm:w-full phone-md:w-full phone-lg:w-full sm:w-full md:w-1/2 lg:w-1/2 xl:1/2 rounded-xl flex-grow flex-shrink">
-					<div className="border-l-4 px-3 font-bold border-blue-500 my-5 text-xl phone-lg:text-lg phone-md:text-md phone-sm:text-sm">
+				<div className="w-full md:w-1/2 flex flex-col">
+					<div className="border-l-4 px-3 font-bold border-blue-500 my-5">
 						FEATURED
 					</div>
-					<div className="relative overflow-hidden rounded-xl w-full">
-						<img
-							src="https://m.media-amazon.com/images/I/71zFdS29uFL._SX679_.jpg"
+					<div className="relative overflow-hidden rounded-xl w-full h-48 md:h-[264px]">
+						<Image
+							src={featured[0].image_url}
 							alt="Featured"
-							className="object-cover w-full h-full"
+							className="object-contain"
+							fill
+							priority
 						/>
 						<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black">
-							<div className="pl-2 text-white phone-sm:text-xxs phone-md:text-xs phone-lg:text-xs sm:text-sm line-clamp-2	">
-								TCL 108 cm (43 inches) Metallic Bezel-Less Series 4K Ultra HD
-								Smart LED Google TV 43V6B (Black)
+							<div className="p-2 text-white line-clamp-2 text-xs">
+								{featured[0].title}
 							</div>
-							<div className="text-white phone-sm:text-xxs phone-md:text-xs phone-lg:text-xs sm:text-sm line-clamp-2 p-2">
+							<div className="p-2 text-white text-xs">
 								2 min read . 4 hours ago
 							</div>
 						</div>
 					</div>
 				</div>
 				{/* Daily Section */}
-				<div className="phone-sm:w-full phone-md:w-full phone-lg:w-full sm:w-full md:w-1/2 lg:w-1/2 xl:1/2 flex-grow flex-shrink">
-					<div className="border-l-4 px-3 font-bold border-blue-500 my-5 text-xl phone-lg:text-lg phone-md:text-md phone-sm:text-sm">
+				<div className="w-full md:w-1/2 flex flex-col">
+					<div className="border-l-4 px-3 font-bold border-blue-500 my-5">
 						DAILY
 					</div>
-					<div className="flex flex-wrap gap-4 items-center justify-center">
-						{json.map((item, index) => (
+					<div className="grid grid-cols-2 gap-2">
+						{featured.slice(1).map((item, index) => (
 							<div
 								key={index}
-								className="relative overflow-hidden rounded-xl border w-full"
-								style={{
-									width: "calc(50% - 0.5rem)",
-									height: "calc((30vw - 0.5rem) * 0.5)",
-								}}
+								className="relative overflow-hidden rounded-xl border w-full h-32"
 							>
-								<img
-									src={item.img}
-									alt={item.desc}
-									className="object-cover w-full h-full"
+								<Image
+									src={item.image_url}
+									alt={item.title}
+									className="object-contain"
+									fill
 								/>
 								<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-black">
-									<div className="text-white phone-sm:text-xxs phone-md:text-xxs phone-lg:text-xxs sm:text-xs mb-2 line-clamp-2">
-										{item.desc}
+									<div className="text-white line-clamp-2 text-xs">
+										{item.title}
 									</div>
-									<div className="text-white text-xs phone-lg:text-xxs phone-md:text-xxs phone-sm:text-xxs line-clamp-2">
-										{item.text}
+									<div className="text-white text-xxs">
+										2 min read . 4 hours ago
 									</div>
 								</div>
 							</div>

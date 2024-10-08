@@ -32,10 +32,7 @@ export async function fetchArticles() {
 					}))
 			);
 
-			console.log(`Next URL: ${next}`);
-
 			if (!next) {
-				console.log("No more pages to fetch.");
 				break;
 			}
 

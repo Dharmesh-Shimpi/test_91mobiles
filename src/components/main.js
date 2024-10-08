@@ -28,7 +28,7 @@ export default function TopAndMain({ initialData }) {
 	return (
 		<div className="w-full flex flex-col items-center">
 			{/* Top eight items */}
-			<div className="flex flex-col items-center w-full max-w-[1200px] mb-6">
+			<div className="flex flex-col items-center w-full mb-6">
 				<div className="flex flex-wrap justify-center items-center w-full">
 					{Array.isArray(filteredData) &&
 						filteredData.slice(0, 8).map((item) => (
@@ -60,13 +60,12 @@ export default function TopAndMain({ initialData }) {
 
 			{/* Subscribe component */}
 			<div className="w-full flex justify-center items-center">
-				{" "}
 				<Subscribe />
-				</div>
+			</div>
 
 			{/* Remaining items */}
 			<div className="w-full flex flex-col items-center">
-				<div className="flex flex-wrap justify-center items-center w-full max-w-[1150px]">
+				<div className="flex flex-wrap justify-center items-center w-full">
 					{Array.isArray(filteredData) &&
 						filteredData.slice(8).map((item) => (
 							<div
