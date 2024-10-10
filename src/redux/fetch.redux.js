@@ -57,10 +57,10 @@ const applyFilter = (state) => {
 
 	if (filter !== "All Articles") {
 		const tagFilters = {
-			"Hot Deals": 1,
-			"Popular Comparison": 2,
-			"Upcoming Gadgets": 3,
-			"Latest Gadgets": 4,
+			"Hot Deals": 0,
+			"Popular Comparison": 1,
+			"Upcoming Gadgets": 2,
+			"Latest Gadgets": 3,
 		};
 		if (tagFilters[filter]) {
 			filteredData = filteredData.filter((item) =>

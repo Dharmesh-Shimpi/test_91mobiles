@@ -1,41 +1,16 @@
-"use client";
-
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setArticles, setFilters } from "@/redux/fetch.redux";
-import { useRouter } from "next/navigation";
-import { updateCookieWithSlug } from "@/utils/cookies";
 import Subscribe from "@/components/subscribe";
 
 export default function TopAndMain({ initialData }) {
-	const router = useRouter();
-	const dispatch = useDispatch();
-	const { filteredData, filter } = useSelector((state) => state.fetch);
-
-	useEffect(() => {
-		dispatch(setArticles(initialData));
-	}, [initialData, dispatch]);
-
-	useEffect(() => {
-		dispatch(setFilters(filter));
-	}, [dispatch, filter, initialData]);
-
-	const handleClick = (slug) => {
-		updateCookieWithSlug("slugs", slug);
-		router.push(`/${slug}`);
-	};
-
 	return (
 		<div className="w-full flex flex-col items-center">
 			{/* Top eight items */}
 			<div className="flex flex-col items-center w-full mb-6">
 				<div className="flex flex-wrap justify-center items-center w-full">
-					{Array.isArray(filteredData) &&
-						filteredData.slice(0, 8).map((item) => (
+					{Array.isArray(initialData) &&
+						initialData.slice(0, 8).map((item) => (
 							<div
 								key={item.article_id}
 								className="border text-sm w-60 m-2 h-96 rounded-lg flex flex-col overflow-hidden cursor-pointer"
-								onClick={() => handleClick(item.slug)}
 							>
 								<div className="h-3/4 w-full">
 									<img
@@ -66,12 +41,11 @@ export default function TopAndMain({ initialData }) {
 			{/* Remaining items */}
 			<div className="w-full flex flex-col items-center">
 				<div className="flex flex-wrap justify-center items-center w-full">
-					{Array.isArray(filteredData) &&
-						filteredData.slice(8).map((item) => (
+					{Array.isArray(initialData) &&
+						initialData.slice(8).map((item) => (
 							<div
 								key={item.article_id}
 								className="border text-sm w-60 m-2 h-96 rounded-lg flex flex-col overflow-hidden cursor-pointer"
-								onClick={() => handleClick(item.slug)}
 							>
 								<div className="h-3/4 w-full">
 									<img

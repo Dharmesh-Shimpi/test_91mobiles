@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Featured({ data, categories, brands }) {
+export default function Featured({ data, categories }) {
 	const category = categories.find((i) => i.name == "TV").category_id;
 
 	const featured = data
@@ -23,8 +23,8 @@ export default function Featured({ data, categories, brands }) {
 							fill
 							priority
 						/>
-						<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black">
-							<div className="p-2 text-white line-clamp-2 text-xs">
+						<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-neutral-500">
+							<div className="p-2 text-white line-clamp-2 text-sm">
 								{featured[0].title}
 							</div>
 							<div className="p-2 text-white text-xs">
@@ -50,8 +50,8 @@ export default function Featured({ data, categories, brands }) {
 									className="object-contain"
 									fill
 								/>
-								<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-black">
-									<div className="text-white line-clamp-2 text-xs">
+								<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-neutral-500">
+									<div className="text-white line-clamp-2 text-sm">
 										{item.title}
 									</div>
 									<div className="text-white text-xxs">

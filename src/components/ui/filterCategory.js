@@ -2,18 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setBrands, setCategories, setCheckedItems } from "@/redux/fetch.redux";
+import { setCheckedItems } from "@/redux/fetch.redux";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function Sidebar({ categories, brands }) {
 	const dispatch = useDispatch();
 	const { checkedItems } = useSelector((state) => state.fetch);
+
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredBrands, setFilteredBrands] = useState(brands);
 
-	useEffect(() => {
-		dispatch(setCategories(categories));
-		dispatch(setBrands(brands));
-	}, [categories, brands, dispatch]);
+	const searchParams = useSearchParams();
+	const router = useRouter();
+	const pathname = usePathname();
 
 	useEffect(() => {
 		setFilteredBrands(
@@ -26,7 +27,6 @@ export default function Sidebar({ categories, brands }) {
 	const handleCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
 
-		// Get the selected name based on the checkbox
 		const selectedName =
 			name === "category"
 				? categories.find((category) => category.category_id === value)?.name
@@ -38,11 +38,26 @@ export default function Sidebar({ categories, brands }) {
 				? [...checkedItems[name], { id: value, name: selectedName }]
 				: checkedItems[name].filter((item) => item.id !== value),
 		};
+
 		dispatch(setCheckedItems(updatedCheckedItems));
+
+		// Update search params
+		const params = new URLSearchParams(searchParams);
+		if (checked) {
+			params.set(name, value);
+		} else {
+			params.delete(name);
+		}
+		router.push(`${pathname}?${params.toString()}`);
 	};
 
 	const handleClearAll = () => {
 		dispatch(setCheckedItems({ category: [], brand: [] }));
+
+		const params = new URLSearchParams(searchParams);
+		params.delete("category");
+		params.delete("brand");
+		router.push(`${pathname}?${params.toString()}`);
 	};
 
 	const handleSearchChange = (event) => {

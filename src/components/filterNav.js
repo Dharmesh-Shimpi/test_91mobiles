@@ -1,25 +1,32 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { setFilters } from "@/redux/fetch.redux";
 import Sidebar from "./ui/filterCategory";
 
 export default function Filter({ categories, brands }) {
 	const dispatch = useDispatch();
-	const [selectedIndex, setSelectedIndex] = useState(null);
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const [selectedIndex, setSelectedIndex] = useState(0);
+	const params = new URLSearchParams(searchParams);
+	params.set("filter", encodeURIComponent(selectedIndex));
+	router.push(`/?${params.toString()}`);
 
 	const filterOptions = [
+		"All Articles",
 		"Hot Deals",
 		"Popular Comparison",
 		"Upcoming Gadgets",
 		"Latest Gadgets",
-		"All Articles",
 	];
 
 	const handleClick = (index) => {
-		setSelectedIndex(index);	
-		dispatch(setFilters(filterOptions[index]));
+		const params = new URLSearchParams(searchParams);
+		setSelectedIndex(index);
+		params.set("filter", encodeURIComponent(index));
+		router.push(`/?${params.toString()}`);
 	};
 
 	return (

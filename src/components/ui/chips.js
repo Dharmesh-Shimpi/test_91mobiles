@@ -1,33 +1,43 @@
-'use client';
+"use client";
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCheckedItems } from "@/redux/fetch.redux";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
-const Chips = () => {
+const Chips = ({ categories, brands }) => {
 	const dispatch = useDispatch();
-	const { checkedItems, categories, brands } = useSelector(
-		(state) => state.fetch
-	);
+	const searchParams = useSearchParams();
+	const router = useRouter();
+	const pathname = usePathname();
+	
+	const { checkedItems } = useSelector((state) => state.fetch);
 
 	const getCategoryName = (id) => {
-		console.log(id);
-		const category = categories.find((cat) => cat.category_id === id.id);
-		console.log(category);
-		return category ? category.name : "Unknown Category"; 
+		const category = categories.find((cat) => cat.category_id === id);
+		return category ? category.name : "Unknown Category";
 	};
 
 	const getBrandName = (id) => {
-		const brand = brands.find((br) => br.brand_id === id.id);
-		return brand ? brand.name : "Unknown Brand"; 
+		const brand = brands.find((br) => br.brand_id === id);
+		return brand ? brand.name : "Unknown Brand";
 	};
 
 	const handleRemove = (type, item) => {
 		const updatedCheckedItems = {
 			...checkedItems,
-			[type]: checkedItems[type].filter((i) => i !== item),
+			[type]: checkedItems[type].filter((i) => i.id !== item.id),
 		};
 		dispatch(setCheckedItems(updatedCheckedItems));
+
+		const params = new URLSearchParams(searchParams);
+		const paramKey = type === "category" ? "category" : "brand";
+
+		if (params.get(paramKey) === item.id) {
+			params.delete(paramKey);
+		}
+
+		router.push(`${pathname}?${params.toString()}`);
 	};
 
 	return (
@@ -35,11 +45,13 @@ const Chips = () => {
 			{Object.keys(checkedItems).map((type) =>
 				checkedItems[type].map((item) => (
 					<div
-						key={`${type}-${item}`}
+						key={`${type}-${item.id}`} // Updated key to ensure it's unique based on type and id
 						className="flex items-center bg-blue-200 text-blue-800 rounded-lg px-3 py-1 text-sm"
 					>
 						<span>
-							{type === "category" ? getCategoryName(item) : getBrandName(item)}
+							{type === "category"
+								? getCategoryName(item.id)
+								: getBrandName(item.id)}
 						</span>
 						<button
 							className="ml-2 text-blue-600 hover:text-blue-800"
