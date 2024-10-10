@@ -6,10 +6,10 @@ export default function TopAndMain({ initialData }) {
 	return (
 		<div className="w-full flex flex-col items-center">
 			{/* Top eight items */}
-			<div className="flex flex-col items-center w-full mb-6">
-				<div className="flex flex-wrap gap-2 justify-center items-center w-full">
+			<div className="flex flex-col items-center w-full">
+				<div className="flex flex-wrap gap-2 justify-center items-center w-full mb-6">
 					{Array.isArray(initialData) &&
-						initialData.slice(0, 8).map((item) => (
+						initialData.slice(0, 9).map((item) => (
 							<div
 								key={item.article_id}
 								className="border text-sm w-52 h-80 rounded-lg flex flex-col overflow-hidden relative"
@@ -48,9 +48,9 @@ export default function TopAndMain({ initialData }) {
 
 			{/* Remaining items */}
 			<div className="w-full flex flex-col items-center">
-				<div className="flex flex-wrap gap-2 justify-center items-center w-full">
+				<div className="flex flex-wrap gap-2 justify-center items-center w-full mt-6">
 					{Array.isArray(initialData) &&
-						initialData.slice(8).map((item) => (
+						initialData.slice(9).map((item) => (
 							<div
 								key={item.article_id}
 								className="border text-sm w-52 h-80 rounded-lg flex flex-col overflow-hidden relative"
