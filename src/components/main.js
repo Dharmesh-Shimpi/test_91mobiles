@@ -19,8 +19,8 @@ export default function TopAndMain({ initialData }) {
 										className=" object-contain"
 										src={item.image_url}
 										alt={item.title}
-										width={180}
-										height={180}
+										width={150}
+										height={100}
 										priority
 										quality={20}
 									/>
@@ -60,8 +60,8 @@ export default function TopAndMain({ initialData }) {
 										className=" object-contain"
 										src={item.image_url}
 										alt={item.title}
-										width={180}
-										height={180}
+										width={150}
+										height={100}
 										priority
 										quality={20}
 									/>

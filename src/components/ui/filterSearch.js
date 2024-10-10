@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Filter from "../filterNav";
 import { VscSettings } from "react-icons/vsc";
@@ -27,7 +26,7 @@ export default function FilterSearch({ categories, brands }) {
 	};
 
 	return (
-		<div className="w-full py-5 flex px-4 md:px-5 lg:px-16 justify-between items-center">
+		<div className="w-full py-5 flex px-4 md:px-16 justify-between items-center">
 			{/* Desktop Filter */}
 			<div className="phone-sm:hidden lg:block ">
 				<Filter categories={categories} brands={brands} />

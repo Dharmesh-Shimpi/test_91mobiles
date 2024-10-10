@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
 import Sidebar from "./ui/filterCategory";
 
 export default function Filter({ categories, brands }) {
-	const dispatch = useDispatch();
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const [selectedIndex, setSelectedIndex] = useState(0);

@@ -9,7 +9,7 @@ export default function Featured({ data, categories }) {
 
 	return (
 		<section className="py-10 w-full flex justify-center items-center bg-slate-100 overflow-hidden">
-			<div className="w-full flex flex-col md:flex-row gap-4 px-4 md:px-5 lg:px-16">
+			<div className="w-full flex flex-col md:flex-row gap-4 px-4 md:px-16 md:gap-1">
 				{/* Featured Section */}
 				<div className="w-full md:w-1/2 flex flex-col">
 					<div className="border-l-4 px-3 font-bold border-blue-500 my-5">
