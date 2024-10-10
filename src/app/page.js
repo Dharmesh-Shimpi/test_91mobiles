@@ -10,8 +10,7 @@ import Chips from "@/components/ui/chips";
 import FilterSearch from "@/components/ui/filterSearch";
 
 export default async function Home({ searchParams }) {
-	// Fetch initial data
-	console.log(searchParams);
+
 	const initialArticles = await fetchArticles();
 	const categories = await fetchCategories();
 	const brands = await fetchBrands();
