@@ -1,66 +1,24 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import Image from "next/image";
+import ShareButton from "@/app/[slug]/shareButton";
 import { fetchWithAuth } from "@/utils/fetchHelper";
-import { useRouter } from "next/navigation";
-import { updateCookieWithSlug } from "@/utils/cookies";
-import {
-	FacebookShareButton,
-	TwitterShareButton,
-	LinkedinShareButton,
-	FacebookIcon,
-	TwitterIcon,
-	LinkedinIcon,
-} from "react-share";
-import { IoArrowRedo } from "react-icons/io5";
-import "./style.css";
+import { fetchArticles } from "@/utils/fetchArticles";
+import RelatedArticles from "@/app/[slug]/related";
+import './style.css';
 
-export default function ArticleLayout({ params }) {
-	const [article, setArticle] = useState(null);
-	const [showShareOptions, setShowShareOptions] = useState(false);
+export default async function ArticleLayout({ params }) {
 	const { slug } = params;
-	const router = useRouter();
-	const { articles } = useSelector((state) => state.fetch);
+
+	const article = await fetchWithAuth(
+		`http://13.200.221.80:8000/api/articlesbyslug/${slug}`
+	);
+
+	// Fetch all articles (or you can fetch related articles in a different way)
+	const articles = await fetchArticles();
+
 	const category = articles.find((item) => item.slug === slug)?.category;
 	const relatedArticles = articles.filter(
 		(item) => item.category === category && item.slug !== slug
 	);
-
-	useEffect(() => {
-		async function getDetails() {
-			try {
-				const temp = await fetchWithAuth(
-					`http://13.200.221.80:8000/api/articlesbyslug/${slug}`
-				);
-				setArticle(temp);
-			} catch (error) {
-				console.error("Failed to fetch article:", error);
-			}
-		}
-		if (slug) {
-			getDetails();
-		}
-	}, [slug, category, articles]);
-
-	const handleArticleClick = (newSlug) => {
-		updateCookieWithSlug("slugs", newSlug);
-		router.push(`/${newSlug}`);
-	};
-
-	const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-
-	const toggleShareOptions = () => {
-		setShowShareOptions(!showShareOptions);
-	};
-
-	if (!article) {
-		return (
-			<div className="flex items-center justify-center h-screen text-lg">
-				Loading...
-			</div>
-		);
-	}
 
 	return (
 		<div
@@ -68,9 +26,11 @@ export default function ArticleLayout({ params }) {
 			className="w-full phone-sm:p-0 md:p-8 lg:px-12"
 		>
 			<div className="flex flex-wrap phone-sm:mx-0 md:mx-4 w-full">
+				{/* Main Article Section */}
 				<div className="phone-sm:w-full md:w-[850px] phone-sm:p-0 md:px-4 mb-8">
 					<div className="bg-white shadow-lg rounded-lg p-6 md:p-8">
-						<h1 className="mb-4 text-gray-900">{article.title}</h1>
+						<h1 className="mb-4 text-xl font-bold">{article.title}</h1>
+
 						<div className="flex justify-between items-center">
 							<p className="text-gray-600 text-sm mb-4">
 								Published on:{" "}
@@ -78,42 +38,23 @@ export default function ArticleLayout({ params }) {
 									{article.publication_date}
 								</span>
 							</p>
-							{/* Share Button */}
-							<div className="relative">
-								<p
-									onClick={toggleShareOptions}
-									className="cursor-pointer flex items-center italic text-sm text-blue-700"
-								>
-									Share
-									<IoArrowRedo className="ml-2" />
-								</p>
 
-								{showShareOptions && (
-									<div className="absolute flex right-0 w-fit z-10">
-										<FacebookShareButton url={shareUrl} quote={article.title}>
-											<FacebookIcon className="m-1" size={34} round />
-											{/* <span className="ml-2">Facebook</span> */}
-										</FacebookShareButton>
-										<TwitterShareButton url={shareUrl} title={article.title}>
-											<TwitterIcon className="m-1" size={34} round />
-											{/* <span className="ml-2">Twitter</span> */}
-										</TwitterShareButton>
-										<LinkedinShareButton url={shareUrl} title={article.title}>
-											<LinkedinIcon className="m-1" size={34} round />
-											{/* <span className="ml-2">LinkedIn</span> */}
-										</LinkedinShareButton>
-									</div>
-								)}
-							</div>
+							{/* Share Button */}
+							<ShareButton article={article} />
 						</div>
+
 						<div className="flex justify-center items-center">
-							<img
+							<Image
 								src={article.image_url}
 								alt={article.title}
 								className="mb-6 rounded-lg"
+								height={300}
+								width={300}
+								quality={50}
 							/>
 						</div>
-						<p className="text-gray-800 text-lg leading-relaxed mb-6">
+
+						<p className="text-gray-800 text-base leading-relaxed mb-6">
 							{article.meta_desc}
 						</p>
 
@@ -123,20 +64,26 @@ export default function ArticleLayout({ params }) {
 								<div dangerouslySetInnerHTML={{ __html: article.content2 }} />
 							)}
 							<div className="flex justify-center items-center">
-								<img
+								<Image
 									src={article.image_url1}
 									alt={article.title}
 									className="mb-6 rounded-lg"
+									height={300}
+									width={300}
+									quality={50}
 								/>
 							</div>
 							{article.content3 && (
 								<div dangerouslySetInnerHTML={{ __html: article.content3 }} />
 							)}
 							<div className="flex justify-center items-center">
-								<img
+								<Image
 									src={article.image_url2}
 									alt={article.title}
 									className="mb-6 rounded-lg"
+									height={300}
+									width={300}
+									quality={50}
 								/>
 							</div>
 							{article.content4 && (
@@ -145,24 +92,10 @@ export default function ArticleLayout({ params }) {
 						</div>
 					</div>
 				</div>
-				<div className="phone-sm:w-full md:w-[350px] phone-sm:m-0 md:mx-16">
-					<div className="bg-white shadow-lg rounded-lg phone-sm:p-4 md:p-6 scrollable-container">
-						<p className="mb-4 bg-red-600 text-white text-xs w-fit py-1 px-3 font-medium">
-							RELATED ARTICLES
-						</p>
 
-						{relatedArticles.map((item) => (
-							<div
-								key={item.id}
-								className="border-b-4 border-gray-300 line-clamp-3 p-4 cursor-pointer hover:bg-gray-100 transition-colors"
-								onClick={() => handleArticleClick(item.slug)}
-							>
-								<h3 className="text-sm font-semibold text-gray-800">
-									{item.title}
-								</h3>
-							</div>
-						))}
-					</div>
+				{/* Related Articles Section */}
+				<div className="phone-sm:w-full md:w-[350px] phone-sm:m-0 md:mx-16">
+					<RelatedArticles articles={relatedArticles} />
 				</div>
 			</div>
 		</div>

@@ -15,16 +15,18 @@ export default function Featured({ data, categories }) {
 					<div className="border-l-4 px-3 font-bold border-blue-500 my-5">
 						FEATURED
 					</div>
-					<div className="relative overflow-hidden rounded-xl w-full h-48 md:h-[264px]">
+					<div className="relative overflow-hidden rounded-xl w-full h-48 md:h-[264px] flex justify-center items-center">
 						<Image
 							src={featured[0].image_url}
 							alt="Featured"
-							className="object-contain"
-							fill
+							className="object-cover relative"
+							height={150}
+							width={250}
 							priority
+							quality={20}
 						/>
-						<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-neutral-500">
-							<div className="p-2 text-white line-clamp-2 text-sm">
+						<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-neutral-600">
+							<div className="text-white line-clamp-2 text-sm px-2">
 								{featured[0].title}
 							</div>
 							<div className="p-2 text-white text-xs">
@@ -42,19 +44,21 @@ export default function Featured({ data, categories }) {
 						{featured.slice(1).map((item, index) => (
 							<div
 								key={index}
-								className="relative overflow-hidden rounded-xl border w-full h-32"
+								className="relative overflow-hidden rounded-xl border w-full h-32 flex justify-center items-center"
 							>
 								<Image
 									src={item.image_url}
 									alt={item.title}
 									className="object-contain"
-									fill
+									height={150}
+									width={150}
+									quality={20}
 								/>
-								<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-neutral-500">
-									<div className="text-white line-clamp-2 text-sm">
+								<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-neutral-600">
+									<div className="text-white line-clamp-2 text-xs">
 										{item.title}
 									</div>
-									<div className="text-white text-xxs">
+									<div className="text-white text-xxs pt-1">
 										2 min read . 4 hours ago
 									</div>
 								</div>

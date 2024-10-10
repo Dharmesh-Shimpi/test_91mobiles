@@ -41,15 +41,25 @@ export default function Sidebar({ categories, brands }) {
 
 		dispatch(setCheckedItems(updatedCheckedItems));
 
-		// Update search params
 		const params = new URLSearchParams(searchParams);
+
 		if (checked) {
-			params.set(name, value);
+			const existingParams = params.getAll(name);
+			if (!existingParams.includes(value)) {
+				params.append(name, value); 
+			}
 		} else {
-			params.delete(name);
+			
+			const existingParams = params
+				.getAll(name)
+				.filter((paramValue) => paramValue !== value);
+			params.delete(name); 
+			existingParams.forEach((paramValue) => params.append(name, paramValue));
 		}
+
 		router.push(`${pathname}?${params.toString()}`);
 	};
+
 
 	const handleClearAll = () => {
 		dispatch(setCheckedItems({ category: [], brand: [] }));
@@ -65,7 +75,7 @@ export default function Sidebar({ categories, brands }) {
 	};
 
 	return (
-		<div className="ml-5 h-fit p-4 w-56 bg-gray-100 border border-gray-300 rounded-lg">
+		<div className="h-fit p-4 w-56 bg-gray-100 border border-gray-300 rounded-lg">
 			<div className="flex items-center justify-between mb-4">
 				<h2 className="text-xl font-bold">Filters</h2>
 				<button

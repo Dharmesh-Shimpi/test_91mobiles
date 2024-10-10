@@ -27,9 +27,9 @@ export default function FilterSearch({ categories, brands }) {
 	};
 
 	return (
-		<div className="w-full flex p-5 justify-between items-center">
+		<div className="w-full py-5 flex px-4 md:px-5 lg:px-16 justify-between items-center">
 			{/* Desktop Filter */}
-			<div className="phone-sm:hidden lg:block">
+			<div className="phone-sm:hidden lg:block ">
 				<Filter categories={categories} brands={brands} />
 			</div>
 
@@ -37,13 +37,13 @@ export default function FilterSearch({ categories, brands }) {
 			<input
 				className="rounded-md border text-black px-3 h-8 sm:w-40 sm:text-xs md:w-96 lg:w-80 lg:text-base"
 				placeholder="Search"
-				onChange={handleSearchChange} // Update URL on change
+				onChange={handleSearchChange}
 			/>
 
 			{/* Mobile Sheet Trigger */}
 			<Sheet>
-				<SheetTrigger>
-					<VscSettings className="text-2xl cursor-pointer phone-sm:inline lg:hidden" />
+				<SheetTrigger className="phone-sm:inline lg:hidden">
+					<VscSettings className="text-2xl cursor-pointer" />
 				</SheetTrigger>
 				<SheetContent className="flex w-full overflow-scroll">
 					<Filter categories={categories} brands={brands} />
