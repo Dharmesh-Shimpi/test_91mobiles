@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Subscribe from "@/components/subscribe";
-import OverlayButton from "@/components/ui/OverlayButton"; 
+import OverlayButton from "@/components/ui/OverlayButton";
+import Remaining from "./remainingArticles"; 
 
 export default function TopAndMain({ initialData }) {
 	return (
@@ -22,9 +23,8 @@ export default function TopAndMain({ initialData }) {
 										width={150}
 										height={100}
 										priority
-										quality={20}
+										quality={5}
 									/>
-									{/* Pass item.slug as prop to the client-side OverlayButton */}
 									<OverlayButton slug={item.slug} />
 								</div>
 								<div className="bg-slate-100 p-3 flex flex-col justify-between ">
@@ -50,7 +50,7 @@ export default function TopAndMain({ initialData }) {
 			<div className="w-full flex flex-col items-center">
 				<div className="flex flex-wrap gap-2 justify-center items-center w-full mt-6">
 					{Array.isArray(initialData) &&
-						initialData.slice(9).map((item) => (
+						initialData.slice(9, 50).map((item) => (
 							<div
 								key={item.article_id}
 								className="border text-sm w-52 h-80 rounded-lg flex flex-col overflow-hidden relative"
@@ -63,9 +63,8 @@ export default function TopAndMain({ initialData }) {
 										width={150}
 										height={100}
 										priority
-										quality={20}
+										quality={5}
 									/>
-									{/* Pass item.slug as prop to the client-side OverlayButton */}
 									<OverlayButton slug={item.slug} />
 								</div>
 								<div className="bg-slate-100 p-3 flex flex-col justify-between ">
@@ -81,6 +80,9 @@ export default function TopAndMain({ initialData }) {
 						))}
 				</div>
 			</div>
+
+			{/* Infinite Scroll for Remaining Articles */}
+			<Remaining initialData={initialData.slice(50)} />
 		</div>
 	);
 }

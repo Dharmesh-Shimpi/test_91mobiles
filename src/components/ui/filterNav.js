@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import Sidebar from "./ui/filterCategory";
+import Sidebar from "./filterCategory";
 
 export default function Filter({ categories, brands }) {
 	const router = useRouter();

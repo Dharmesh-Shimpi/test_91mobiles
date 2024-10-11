@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import Filter from "../filterNav";
+import Filter from "./filterNav";
 import { VscSettings } from "react-icons/vsc";
 import { Sheet, SheetContent, SheetTrigger } from "./sheet";
 

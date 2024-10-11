@@ -8,6 +8,7 @@ import TopAndMain from "@/components/main";
 import Sidebar from "@/components/ui/filterCategory";
 import Chips from "@/components/ui/chips";
 import FilterSearch from "@/components/ui/filterSearch";
+import Bulletin from "@/components/bulletin";
 
 export default async function Home({ searchParams }) {
 	const initialArticles = await fetchArticles();
@@ -16,26 +17,21 @@ export default async function Home({ searchParams }) {
 
 	let filteredData = [...initialArticles];
 
-	// Destructure and extract filters from searchParams
 	let { filter, search, category, brand } = searchParams;
-
 	filter = Number(filter);
 
-	// Filter by tag
 	if (filter !== undefined) {
 		if (filter !== 0) {
 			filteredData = filteredData.filter((item) => item.tags.includes(filter));
 		}
 	}
 
-	// Filter by search term
 	if (search !== undefined) {
 		filteredData = filteredData.filter((item) =>
 			item.title.toLowerCase().includes(search.toLowerCase())
 		);
 	}
 
-	// Filter by multiple categories
 	if (category) {
 		const selectedCategories = Array.isArray(category) ? category : [category];
 		filteredData = filteredData.filter((item) =>
@@ -43,7 +39,6 @@ export default async function Home({ searchParams }) {
 		);
 	}
 
-	// Filter by multiple brands
 	if (brand) {
 		const selectedBrands = Array.isArray(brand) ? brand : [brand];
 		filteredData = filteredData.filter((item) =>
@@ -51,11 +46,9 @@ export default async function Home({ searchParams }) {
 		);
 	}
 
-	// Limit the result to first 100 items
-	// filteredData = filteredData.slice(0, 100);
-
 	return (
 		<div className="flex flex-col items-center">
+			<Bulletin combinedData={filteredData} />
 			<Featured
 				data={initialArticles}
 				categories={categories}
