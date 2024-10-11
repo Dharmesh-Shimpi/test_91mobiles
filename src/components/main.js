@@ -23,7 +23,7 @@ export default function TopAndMain({ initialData }) {
 										width={150}
 										height={100}
 										priority
-										quality={5}
+										quality={1}
 									/>
 									<OverlayButton slug={item.slug} />
 								</div>
@@ -63,7 +63,7 @@ export default function TopAndMain({ initialData }) {
 										width={150}
 										height={100}
 										priority
-										quality={5}
+										quality={1}
 									/>
 									<OverlayButton slug={item.slug} />
 								</div>

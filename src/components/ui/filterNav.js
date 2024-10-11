@@ -1,16 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Sidebar from "./filterCategory";
 
 export default function Filter({ categories, brands }) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
+	const pathname = usePathname();
 	const [selectedIndex, setSelectedIndex] = useState(0);
-	const params = new URLSearchParams(searchParams);
-	params.set("filter", encodeURIComponent(selectedIndex));
-	router.push(`/?${params.toString()}`);
+
+	useEffect(() => {
+		const params = new URLSearchParams(searchParams);
+		params.set("filter", encodeURIComponent(selectedIndex));
+		router.push(`/${pathname}?${params.toString()}`);
+	}, [selectedIndex, router, searchParams, pathname]);
 
 	const filterOptions = [
 		"All Articles",
@@ -21,10 +25,7 @@ export default function Filter({ categories, brands }) {
 	];
 
 	const handleClick = (index) => {
-		const params = new URLSearchParams(searchParams);
 		setSelectedIndex(index);
-		params.set("filter", encodeURIComponent(index));
-		router.push(`/?${params.toString()}`);
 	};
 
 	return (
