@@ -11,7 +11,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ["var(--font-sans)", "system-ui", "sans-serif"], // Add fallback fonts
+				sans: ["var(--font-sans)", "system-ui", "sans-serif"],
 			},
 			colors: {
 				border: "hsl(var(--border))",

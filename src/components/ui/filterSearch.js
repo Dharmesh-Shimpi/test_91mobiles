@@ -12,7 +12,6 @@ export default function FilterSearch({ categories, brands }) {
 
 	const handleSearchChange = (e) => {
 		const searchTerm = e.target.value;
-
 		const params = new URLSearchParams(searchParams);
 
 		if (searchTerm) {
@@ -21,7 +20,6 @@ export default function FilterSearch({ categories, brands }) {
 			params.delete("search");
 		}
 
-		// Update the URL with the new search params
 		router.push(`${pathname}?${params.toString()}`);
 	};
 

@@ -18,11 +18,11 @@ export default function Remaining({ initialData }) {
 
 	return (
 		<InfiniteScroll
-			dataLength={visibleData.length} 
-			next={fetchMoreArticles} 
-			hasMore={currentLength < initialData.length} 
+			dataLength={visibleData.length}
+			next={fetchMoreArticles}
+			hasMore={currentLength < initialData.length}
 		>
-			<div className="flex flex-wrap gap-2 justify-center items-center w-full mt-6">
+			<div className="flex flex-wrap gap-2 justify-center items-center w-full mt-6 xl:gap-8">
 				{visibleData.map((item) => (
 					<div
 						key={item.article_id}

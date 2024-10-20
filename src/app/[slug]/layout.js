@@ -8,9 +8,6 @@ import "./style.css";
 export async function generateStaticParams() {
 	const articles = await fetchArticles();
 	const slugs = articles.map((article) => article.slug);
-
-	console.log("Available slugs:", slugs);
-
 	return slugs.map((slug) => ({ slug }));
 }
 

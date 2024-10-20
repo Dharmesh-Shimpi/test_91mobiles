@@ -24,7 +24,9 @@ export default function Featured({ data, categories }) {
 							height={150}
 							width={250}
 							priority
-							quality={1}
+							quality={5}
+							placeholder="blur"
+							blurDataURL={featured[0].image_url}
 						/>
 						<OverlayButton slug={featured[0].slug} />
 						<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-neutral-600">
@@ -54,7 +56,9 @@ export default function Featured({ data, categories }) {
 									className="object-contain"
 									height={150}
 									width={150}
-									quality={1}
+									quality={5}
+									placeholder="blur"
+									blurDataURL={item.image_url}
 								/>
 								<OverlayButton slug={item.slug} />
 								<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-neutral-600">

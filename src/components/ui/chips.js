@@ -23,29 +23,33 @@ const Chips = ({ categories, brands }) => {
 		return brand ? brand.name : "Unknown Brand";
 	};
 
-	const handleRemove = (type, item) => {
-		const updatedCheckedItems = {
-			...checkedItems,
-			[type]: checkedItems[type].filter((i) => i.id !== item.id),
-		};
-		dispatch(setCheckedItems(updatedCheckedItems));
-
-		const params = new URLSearchParams(searchParams);
-		const paramKey = type === "category" ? "category" : "brand";
-
-		if (params.get(paramKey) === item.id) {
-			params.delete(paramKey);
-		}
-
-		router.push(`${pathname}?${params.toString()}`);
+const handleRemove = (type, item) => {
+	const updatedCheckedItems = {
+		...checkedItems,
+		[type]: checkedItems[type].filter((i) => i.id !== item.id),
 	};
+
+	dispatch(setCheckedItems(updatedCheckedItems));
+
+	const params = new URLSearchParams(searchParams);
+	const paramKey = type === "category" ? "category" : "brand";
+	const existingParams = params.getAll(paramKey);
+
+	const updatedParams = existingParams.filter((param) => param !== item.id);
+	params.delete(paramKey); 
+
+	updatedParams.forEach((param) => params.append(paramKey, param));
+
+	router.push(`${pathname}?${params.toString()}`);
+};
+
 
 	return (
 		<div className="flex flex-wrap gap-2 p-2 h-fit w-fit">
 			{Object.keys(checkedItems).map((type) =>
 				checkedItems[type].map((item) => (
 					<div
-						key={`${type}-${item.id}`} // Updated key to ensure it's unique based on type and id
+						key={`${type}-${item.id}`} 
 						className="flex items-center bg-blue-200 text-blue-800 rounded-lg px-3 py-1 text-sm"
 					>
 						<span>

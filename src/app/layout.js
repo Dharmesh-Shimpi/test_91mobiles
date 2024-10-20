@@ -15,14 +15,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en" suppressHydrationWarning className="scroll-smooth">
 			<ReduxProvider>
-				<body
-					className={cn(
-						"font-sans antialiased",
-						fontSans.variable
-					)}
-				>
+				<body className={cn("font-sans antialiased", fontSans.variable)}>
 					{children}
 				</body>
 			</ReduxProvider>
