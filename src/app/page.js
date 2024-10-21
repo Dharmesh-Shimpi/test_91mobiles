@@ -4,14 +4,34 @@ import {
 	fetchCategories,
 } from "@/utils/fetchArticles";
 import filtering from "@/utils/filtering";
-import Featured from "@/components/featured";
-import TopAndMain from "@/components/main";
-import Sidebar from "@/components/ui/filterCategory";
-import Chips from "@/components/ui/chips";
-import FilterSearch from "@/components/ui/filterSearch";
-import Bulletin from "@/components/bulletin";
-import Loading from "@/utils/loading";
+import Loading from "@/app/loading";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamically import components
+const Featured = dynamic(() => import("@/components/featured"), {
+	suspense: true,
+});
+
+const TopAndMain = dynamic(() => import("@/components/main"), {
+	suspense: true,
+});
+
+const Sidebar = dynamic(() => import("@/components/ui/filterCategory"), {
+	suspense: true,
+});
+
+const Chips = dynamic(() => import("@/components/ui/chips"), {
+	suspense: true,
+});
+
+const FilterSearch = dynamic(() => import("@/components/ui/filterSearch"), {
+	suspense: true,
+});
+
+// const Bulletin = dynamic(() => import("@/components/bulletin"), {
+// 	suspense: true,
+// });
 
 export default async function Home({ searchParams }) {
 	const initialArticles = await fetchArticles();
@@ -23,10 +43,9 @@ export default async function Home({ searchParams }) {
 
 	return (
 		<div className="flex flex-col items-center">
-			{/* Use Suspense to wrap components that need server-side data */}
-			<Suspense fallback={<Loading />}>
+			{/* <Suspense fallback={<Loading />}>
 				<Bulletin combinedData={filteredData} />
-			</Suspense>
+			</Suspense> */}
 
 			<Suspense fallback={<Loading />}>
 				<Featured
