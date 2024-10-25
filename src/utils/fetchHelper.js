@@ -3,6 +3,7 @@
 export const fetchWithAuth = async (url) => {
 	try {
 		const response = await fetch(url, {
+			cache: "force-cache",
 			method: "GET",
 			headers: {
 				Authorization: "Basic " + btoa(`Abhinay:mobiles@32`),

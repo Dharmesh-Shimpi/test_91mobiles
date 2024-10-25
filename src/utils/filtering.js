@@ -1,7 +1,11 @@
-export default function filtering(searchParams, filteredData) {
-	let { filter, search, category, brand } = searchParams;
-	filter = Number(filter);
-
+export default function filtering(
+	filter,
+	search,
+	category,
+	brand,
+	filteredData
+) {
+	// console.log(filter, search, category, brand, filteredData);
 	if (filter !== undefined) {
 		if (filter !== 0) {
 			filteredData = filteredData.filter((item) => item.tags.includes(filter));

@@ -78,4 +78,14 @@
     -ms-overflow-style: none;
     /* IE and Edge */
   }
+
+  .skeleton {
+    width: 100%;
+    /* Adjust width as needed */
+    height: 20px;
+    /* Adjust height as needed */
+    margin: 4px 0;
+    /* Space between skeletons */
+  }
+
 }

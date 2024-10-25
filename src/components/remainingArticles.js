@@ -26,21 +26,21 @@ export default function Remaining({ initialData }) {
 				{visibleData.map((item) => (
 					<div
 						key={item.article_id}
-						className="border text-sm w-52 h-80 rounded-lg flex flex-col overflow-hidden relative"
+						className="border text-sm w-full h-96 md:w-64 rounded-lg flex flex-col overflow-hidden relative"
 					>
-						<div className="h-full w-full flex justify-center items-center relative">
+						<div className="h-3/4 w-full flex justify-center items-center relative">
 							<Image
-								className="object-contain"
+								className=" object-fill"
 								src={item.image_url}
 								alt={item.title}
-								width={150}
-								height={100}
+								fill
 								priority
-								quality={20}
+								quality={5}
+								placeholder="blur"
+								blurDataURL={item.image_url}
 							/>
-							<OverlayButton slug={item.slug} />
 						</div>
-						<div className="bg-slate-100 p-3 flex flex-col justify-between ">
+						<div className="bg-slate-100 p-3 flex flex-col justify-between h-1/4 w-full">
 							<div className="font-bold text-center line-clamp-2">
 								{item.title}
 							</div>
@@ -49,6 +49,7 @@ export default function Remaining({ initialData }) {
 								<p>{item.publish_date}</p>
 							</div>
 						</div>
+						<OverlayButton slug={item.slug} />
 					</div>
 				))}
 			</div>

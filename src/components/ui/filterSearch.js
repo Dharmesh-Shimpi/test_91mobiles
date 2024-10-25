@@ -5,10 +5,11 @@ import Filter from "./filterNav";
 import { VscSettings } from "react-icons/vsc";
 import { Sheet, SheetContent, SheetTrigger } from "./sheet";
 
-export default function FilterSearch({ categories, brands }) {
+export default function FilterSearch() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
+
 
 	const handleSearchChange = (e) => {
 		const searchTerm = e.target.value;
@@ -20,14 +21,14 @@ export default function FilterSearch({ categories, brands }) {
 			params.delete("search");
 		}
 
-		router.push(`${pathname}?${params.toString()}`);
+		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 	};
 
 	return (
-		<div className="w-full py-5 flex px-4 md:px-16 justify-between items-center">
+		<>
 			{/* Desktop Filter */}
 			<div className="phone-sm:hidden lg:block ">
-				<Filter categories={categories} brands={brands} />
+				<Filter />
 			</div>
 
 			{/* Search Input */}
@@ -43,9 +44,9 @@ export default function FilterSearch({ categories, brands }) {
 					<VscSettings className="text-2xl cursor-pointer" />
 				</SheetTrigger>
 				<SheetContent className="flex w-full overflow-scroll">
-					<Filter categories={categories} brands={brands} />
+					<Filter />
 				</SheetContent>
 			</Sheet>
-		</div>
+		</>
 	);
 }

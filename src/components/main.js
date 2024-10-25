@@ -2,41 +2,48 @@ import Image from "next/image";
 import Subscribe from "@/components/subscribe";
 import OverlayButton from "@/components/ui/OverlayButton";
 import Remaining from "./remainingArticles";
+import filtering from "@/utils/filtering";
+import { fetchArticles } from "@/utils/fetchArticles";
 
-export default function TopAndMain({ initialData }) {
+export default async function TopAndMain({ filter, search, category, brand }) {
+	let data = await fetchArticles();
+	// console.log(data);
+	// console.log(filter, search, category, brand);
+	// console.log(initialData);
+	let initialData = filtering(filter, search, category, brand, data);
+
 	return (
-		<div className="w-full flex flex-col items-center xl:p-1 ">
+		<>
 			{/* Top eight items */}
 			<div className="flex flex-wrap gap-2 justify-center items-center w-full mb-6 xl:gap-8">
 				{Array.isArray(initialData) &&
-					initialData.slice(0, 9).map((item) => (
+					initialData.slice(0, 8).map((item) => (
 						<div
 							key={item.article_id}
-							className="border text-sm w-52 h-80 rounded-lg flex flex-col overflow-hidden relative"
+							className="border text-sm w-full h-96 md:w-64 rounded-lg flex flex-col overflow-hidden relative"
 						>
-							<div className="h-full w-full flex justify-center items-center relative">
+							<div className="h-3/4 w-full flex justify-center items-center relative">
 								<Image
 									className=" object-contain"
 									src={item.image_url}
 									alt={item.title}
-									width={150}
-									height={100}
-									priority
+									fill
 									quality={5}
 									placeholder="blur"
 									blurDataURL={item.image_url}
+									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 								/>
-								<OverlayButton slug={item.slug} />
 							</div>
-							<div className="bg-slate-100 p-3 flex flex-col justify-between ">
+							<div className="bg-slate-100 p-3 flex flex-col justify-between h-1/4 w-full">
 								<div className="font-bold text-center line-clamp-2">
 									{item.title}
 								</div>
-								<div className="flex justify-between text-xs pt-2">
+								<div className="flex justify-between text-xs">
 									<p>30 sec read</p>
 									<p>{item.publish_date}</p>
 								</div>
 							</div>
+							<OverlayButton slug={item.slug} />
 						</div>
 					))}
 			</div>
@@ -50,40 +57,39 @@ export default function TopAndMain({ initialData }) {
 
 			<div className="flex flex-wrap gap-2 justify-center items-center w-full mt-6 xl:gap-8">
 				{Array.isArray(initialData) &&
-					initialData.slice(9, 50).map((item) => (
+					initialData.slice(8, 50).map((item) => (
 						<div
 							key={item.article_id}
-							className="border text-sm w-52 h-80 rounded-lg flex flex-col overflow-hidden relative"
+							className="border text-sm w-full h-96 md:w-64 rounded-lg flex flex-col overflow-hidden relative"
 						>
-							<div className="h-full w-full flex justify-center items-center relative">
+							<div className="h-3/4 w-full flex justify-center items-center relative">
 								<Image
 									className=" object-contain"
 									src={item.image_url}
 									alt={item.title}
-									width={150}
-									height={100}
-									priority
+									fill
 									quality={5}
 									placeholder="blur"
 									blurDataURL={item.image_url}
+									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 								/>
-								<OverlayButton slug={item.slug} />
 							</div>
-							<div className="bg-slate-100 p-3 flex flex-col justify-between ">
+							<div className="bg-slate-100 p-3 flex flex-col justify-between h-1/4 w-full">
 								<div className="font-bold text-center line-clamp-2">
 									{item.title}
 								</div>
-								<div className="flex justify-between text-xs pt-2">
+								<div className="flex justify-between text-xs">
 									<p>30 sec read</p>
 									<p>{item.publish_date}</p>
 								</div>
 							</div>
+							<OverlayButton slug={item.slug} />
 						</div>
 					))}
 			</div>
 
 			{/* Infinite Scroll for Remaining Articles */}
-			<Remaining initialData={initialData.slice(50)} />
-		</div>
+			{initialData && <Remaining initialData={initialData.slice(50)} />}
+		</>
 	);
 }

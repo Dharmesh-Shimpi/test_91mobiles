@@ -1,77 +1,51 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCheckedItems } from "@/redux/fetch.redux";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import Loading from "@/components/loading";
 
-export default function Sidebar({ categories, brands }) {
-	const dispatch = useDispatch();
-	const { checkedItems } = useSelector((state) => state.fetch);
-
-	const [searchTerm, setSearchTerm] = useState("");
-	const [filteredBrands, setFilteredBrands] = useState(brands);
-
+export default function Sidebar({ categories, brands, category, brand }) {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const pathname = usePathname();
+	let selectedCategories = null;
+	let selectedBrands = null;
 
-	useEffect(() => {
-		setFilteredBrands(
-			brands.filter((brand) =>
-				brand.name.toLowerCase().includes(searchTerm.toLowerCase())
-			)
-		);
-	}, [searchTerm, brands]);
+	if (!categories || !brands) {
+		return <Loading />;
+	}
+
+	if (category) {
+		selectedCategories = Array.isArray(category) ? category : [category];
+	}
+	if (brand) {
+		selectedBrands = Array.isArray(brand) ? brand : [brand];
+	}
 
 	const handleCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
-
-		const selectedName =
-			name === "category"
-				? categories.find((category) => category.category_id === value)?.name
-				: brands.find((brand) => brand.brand_id === value)?.name;
-
-		const updatedCheckedItems = {
-			...checkedItems,
-			[name]: checked
-				? [...checkedItems[name], { id: value, name: selectedName }]
-				: checkedItems[name].filter((item) => item.id !== value),
-		};
-
-		dispatch(setCheckedItems(updatedCheckedItems));
-
 		const params = new URLSearchParams(searchParams);
 
 		if (checked) {
 			const existingParams = params.getAll(name);
 			if (!existingParams.includes(value)) {
-				params.append(name, value); 
+				params.append(name, value);
 			}
 		} else {
-			
-			const existingParams = params
+			const updatedParams = params
 				.getAll(name)
 				.filter((paramValue) => paramValue !== value);
-			params.delete(name); 
-			existingParams.forEach((paramValue) => params.append(name, paramValue));
+			params.delete(name);
+			updatedParams.forEach((paramValue) => params.append(name, paramValue));
 		}
 
-		router.push(`${pathname}?${params.toString()}`);
+		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 	};
 
-
 	const handleClearAll = () => {
-		dispatch(setCheckedItems({ category: [], brand: [] }));
-
 		const params = new URLSearchParams(searchParams);
 		params.delete("category");
 		params.delete("brand");
-		router.push(`${pathname}?${params.toString()}`);
-	};
-
-	const handleSearchChange = (event) => {
-		setSearchTerm(event.target.value);
+		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 	};
 
 	return (
@@ -88,20 +62,21 @@ export default function Sidebar({ categories, brands }) {
 			<div className="mb-6">
 				<h3 className="text-lg font-semibold mb-2">Category</h3>
 				<div className="space-y-2">
-					{categories.map((category) => (
-						<div key={category.category_id}>
+					{categories.map((c) => (
+						<div key={c.category_id}>
 							<label className="inline-flex items-center">
 								<input
 									type="checkbox"
 									name="category"
-									value={category.category_id}
-									checked={checkedItems.category.some(
-										(item) => item.id === category.category_id
-									)}
+									value={c.category_id}
+									checked={
+										selectedCategories &&
+										selectedCategories.some((cat) => cat == c.category_id)
+									}
 									onChange={handleCheckboxChange}
 									className="form-checkbox"
 								/>
-								<span className="ml-2">{category.name}</span>
+								<span className="ml-2">{c.name}</span>
 							</label>
 						</div>
 					))}
@@ -109,28 +84,22 @@ export default function Sidebar({ categories, brands }) {
 			</div>
 			<div>
 				<h3 className="text-lg font-semibold mb-2">Brands</h3>
-				<input
-					type="text"
-					placeholder="Search brands..."
-					value={searchTerm}
-					onChange={handleSearchChange}
-					className="w-full p-2 mb-4 border border-gray-300 rounded"
-				/>
 				<div className="space-y-2">
-					{filteredBrands.map((brand) => (
-						<div key={brand.brand_id}>
+					{brands.map((b) => (
+						<div key={b.brand_id}>
 							<label className="inline-flex items-center">
 								<input
 									type="checkbox"
 									name="brand"
-									value={brand.brand_id}
-									checked={checkedItems.brand.some(
-										(item) => item.id === brand.brand_id
-									)}
+									value={b.brand_id}
+									checked={
+										selectedBrands &&
+										selectedBrands.some((cat) => cat == b.brand_id)
+									}
 									onChange={handleCheckboxChange}
 									className="form-checkbox"
 								/>
-								<span className="ml-2">{brand.name}</span>
+								<span className="ml-2">{b.name}</span>
 							</label>
 						</div>
 					))}
