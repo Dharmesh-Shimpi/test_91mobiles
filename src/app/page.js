@@ -1,4 +1,4 @@
-import Loading from "@/components/loading";
+import Loading from "@/app/loading";
 import { Suspense } from "react";
 // import dynamic from "next/dynamic";
 
