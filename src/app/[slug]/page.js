@@ -59,7 +59,6 @@ export default async function ArticleLayout({ params }) {
 								height={300}
 								width={300}
 								quality={10}
-								placeholder="data:image/..."
 							/>
 						</div>
 
@@ -80,7 +79,6 @@ export default async function ArticleLayout({ params }) {
 									height={300}
 									width={300}
 									quality={10}
-									placeholder="data:image/..."
 								/>
 							</div>
 							{article.content3 && (
@@ -94,7 +92,6 @@ export default async function ArticleLayout({ params }) {
 									height={300}
 									width={300}
 									quality={10}
-									placeholder="data:image/..."
 								/>
 							</div>
 							{article.content4 && (

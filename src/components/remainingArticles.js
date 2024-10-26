@@ -35,8 +35,6 @@ export default function Remaining({ initialData }) {
 								alt={item.title}
 								fill
 								quality={5}
-								placeholder="blur"
-								blurDataURL={item.image_url}
 								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							/>
 						</div>

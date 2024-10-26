@@ -1,7 +1,7 @@
 import RelatedArticles from "./related";
 import { fetchArticles } from "@/utils/fetchArticles";
 
-export default async function RelatedServer() {
+export default async function RelatedServer({ slug }) {
 	const articles = await fetchArticles();
 
 	const category = articles.find((item) => item.slug === slug)?.category;
