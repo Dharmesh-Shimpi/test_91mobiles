@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import Sidebar from "./filterCategory";
+import Sidebar from "./sidebarServer";
 
 export default function Filter() {
 	const router = useRouter();
