@@ -107,7 +107,7 @@ export default async function ArticleLayout({ params }) {
 				{/* Related Articles Section */}
 				<div className="phone-sm:w-full md:w-[350px] phone-sm:m-0 md:mx-16">
 					<Suspense fallback={<Loading />}>
-						<RelatedServer />
+						<RelatedServer slug={slug} />
 					</Suspense>
 				</div>
 			</div>
