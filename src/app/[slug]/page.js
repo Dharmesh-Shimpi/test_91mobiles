@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { Suspense } from "react";
 import ShareButton from "@/app/[slug]/shareButton";
 import { fetchWithAuth } from "@/utils/fetchHelper";
 import { fetchArticles } from "@/utils/fetchArticles";
-import RelatedArticles from "@/app/[slug]/related";
 import data from "@/utils/data";
 import "./style.css";
+import RelatedServer from "./relatedServer";
+import Loading from "../loading";
 
 export async function generateStaticParams() {
 	const articles = await fetchArticles();
@@ -24,13 +26,6 @@ export default async function ArticleLayout({ params }) {
 		console.error("Error fetching data:", error);
 		article = data;
 	}
-
-	const articles = await fetchArticles();
-
-	const category = articles.find((item) => item.slug === slug)?.category;
-	const relatedArticles = articles.filter(
-		(item) => item.category === category && item.slug !== slug
-	);
 
 	return (
 		<div
@@ -110,7 +105,9 @@ export default async function ArticleLayout({ params }) {
 
 				{/* Related Articles Section */}
 				<div className="phone-sm:w-full md:w-[350px] phone-sm:m-0 md:mx-16">
-					<RelatedArticles articles={relatedArticles} />
+					<Suspense fallback={<Loading />}>
+						<RelatedServer />
+					</Suspense>
 				</div>
 			</div>
 		</div>
