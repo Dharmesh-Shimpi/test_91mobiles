@@ -25,6 +25,7 @@ export default async function ArticleLayout({ params }) {
 	} catch (error) {
 		console.error("Error fetching data:", error);
 		article = data;
+		console.log(article);
 	}
 
 	return (

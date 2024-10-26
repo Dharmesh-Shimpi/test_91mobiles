@@ -1,4 +1,4 @@
-const data = {
+let data = {
 	article_id: "3d546ba0-851e-41e5-b747-362e7af25360",
 	title:
 		"Noise ColorFit Qube vs Pebble Pace – Unleashing Style and Tech Brilliance",
