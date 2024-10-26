@@ -30,14 +30,14 @@ export default function Remaining({ initialData }) {
 					>
 						<div className="h-3/4 w-full flex justify-center items-center relative">
 							<Image
-								className=" object-fill"
+								className=" object-contain"
 								src={item.image_url}
 								alt={item.title}
 								fill
-								priority
 								quality={5}
 								placeholder="blur"
 								blurDataURL={item.image_url}
+								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							/>
 						</div>
 						<div className="bg-slate-100 p-3 flex flex-col justify-between h-1/4 w-full">

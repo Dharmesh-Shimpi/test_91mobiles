@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import Featured from "@/components/featured";
 import TopAndMain from "@/components/main";
 import Sidebar from "@/components/ui/sidebarServer";
-import Chips from "@/components/ui/chips";
+import Chips from "@/components/ui/chipsServer";
 import FilterSearch from "@/components/ui/filterSearch";
 import FeaturedSkeleton from "@/components/featuredSkeleton";
 import TopAndMainSkeleton from "@/components/mainSkeleton";
@@ -17,7 +17,7 @@ export default async function Home({ searchParams }) {
 	// console.log(filter, search, category, brand);
 	filter = Number(filter);
 	return (
-		<main className="flex flex-col items-center">
+		<main className="flex flex-col items-center group">
 			{/* <Suspense fallback={<Loading />}>
 				<Bulletin combinedData={filteredData} />
 			</Suspense> */}
@@ -43,7 +43,7 @@ export default async function Home({ searchParams }) {
 					<Suspense fallback={<Loading />}>
 						<Chips category={category} brand={brand} />
 					</Suspense>
-					<div className="w-full flex flex-col items-center xl:p-1 ">
+					<div className="w-full flex flex-col items-center xl:p-1 group-has-[searching]:animate-pulse">
 						<Suspense fallback={<TopAndMainSkeleton />}>
 							<TopAndMain
 								filter={filter}

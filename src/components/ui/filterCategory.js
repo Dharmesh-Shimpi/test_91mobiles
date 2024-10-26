@@ -1,36 +1,22 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import Loading from "@/components/loading";
+import { useTransition } from "react";
 
 export default function Sidebar({ categories, brands, category, brand }) {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const pathname = usePathname();
-	let selectedCategories = null;
-	let selectedBrands = null;
-
-	if (!categories || !brands) {
-		return <Loading />;
-	}
-
-	if (category) {
-		selectedCategories = Array.isArray(category) ? category : [category];
-	}
-	if (brand) {
-		selectedBrands = Array.isArray(brand) ? brand : [brand];
-	}
+	const [isPending, startTransition] = useTransition();
 
 	const handleCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
 		const params = new URLSearchParams(searchParams);
 
 		if (checked) {
-			const existingParams = params.getAll(name);
-			if (!existingParams.includes(value)) {
-				params.append(name, value);
-			}
+			params.append(name, value);
 		} else {
+			// Remove the unchecked value from the URLSearchParams
 			const updatedParams = params
 				.getAll(name)
 				.filter((paramValue) => paramValue !== value);
@@ -38,7 +24,9 @@ export default function Sidebar({ categories, brands, category, brand }) {
 			updatedParams.forEach((paramValue) => params.append(name, paramValue));
 		}
 
-		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		startTransition(() => {
+			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		});
 	};
 
 	const handleClearAll = () => {
@@ -48,8 +36,16 @@ export default function Sidebar({ categories, brands, category, brand }) {
 		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 	};
 
+	const isChecked = (name, id) => {
+		const selectedItems = searchParams.getAll(name);
+		return selectedItems.includes(id);
+	};
+
 	return (
-		<div className="h-fit p-4 w-56 bg-gray-100 border border-gray-300 rounded-lg">
+		<div
+			searching={isPending ? "" : undefined}
+			className="h-fit p-4 w-56 bg-gray-100 border border-gray-300 rounded-lg"
+		>
 			<div className="flex items-center justify-between mb-4">
 				<h2 className="text-xl font-bold">Filters</h2>
 				<button
@@ -62,47 +58,43 @@ export default function Sidebar({ categories, brands, category, brand }) {
 			<div className="mb-6">
 				<h3 className="text-lg font-semibold mb-2">Category</h3>
 				<div className="space-y-2">
-					{categories.map((c) => (
-						<div key={c.category_id}>
-							<label className="inline-flex items-center">
-								<input
-									type="checkbox"
-									name="category"
-									value={c.category_id}
-									checked={
-										selectedCategories &&
-										selectedCategories.some((cat) => cat == c.category_id)
-									}
-									onChange={handleCheckboxChange}
-									className="form-checkbox"
-								/>
-								<span className="ml-2">{c.name}</span>
-							</label>
-						</div>
-					))}
+					{categories &&
+						categories.map((c) => (
+							<div key={c.category_id}>
+								<label className="inline-flex items-center">
+									<input
+										type="checkbox"
+										name="category"
+										value={c.category_id}
+										checked={isChecked("category", c.category_id.toString())}
+										onChange={handleCheckboxChange}
+										className="form-checkbox"
+									/>
+									<span className="ml-2">{c.name}</span>
+								</label>
+							</div>
+						))}
 				</div>
 			</div>
 			<div>
 				<h3 className="text-lg font-semibold mb-2">Brands</h3>
 				<div className="space-y-2">
-					{brands.map((b) => (
-						<div key={b.brand_id}>
-							<label className="inline-flex items-center">
-								<input
-									type="checkbox"
-									name="brand"
-									value={b.brand_id}
-									checked={
-										selectedBrands &&
-										selectedBrands.some((cat) => cat == b.brand_id)
-									}
-									onChange={handleCheckboxChange}
-									className="form-checkbox"
-								/>
-								<span className="ml-2">{b.name}</span>
-							</label>
-						</div>
-					))}
+					{brands &&
+						brands.map((b) => (
+							<div key={b.brand_id}>
+								<label className="inline-flex items-center">
+									<input
+										type="checkbox"
+										name="brand"
+										value={b.brand_id}
+										checked={isChecked("brand", b.brand_id.toString())}
+										onChange={handleCheckboxChange}
+										className="form-checkbox"
+									/>
+									<span className="ml-2">{b.name}</span>
+								</label>
+							</div>
+						))}
 				</div>
 			</div>
 		</div>

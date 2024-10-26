@@ -1,5 +1,7 @@
 "use client";
 
+
+import { useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Filter from "./filterNav";
 import { VscSettings } from "react-icons/vsc";
@@ -9,7 +11,7 @@ export default function FilterSearch() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
-
+	const [isPending, startTransition] = useTransition();
 
 	const handleSearchChange = (e) => {
 		const searchTerm = e.target.value;
@@ -21,7 +23,9 @@ export default function FilterSearch() {
 			params.delete("search");
 		}
 
-		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		startTransition(() => {
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        });
 	};
 
 	return (
@@ -32,7 +36,7 @@ export default function FilterSearch() {
 			</div>
 
 			{/* Search Input */}
-			<input
+			<input searching={isPending? '' : undefined}
 				className="rounded-md border text-black px-3 h-8 sm:w-40 sm:text-xs md:w-96 lg:w-80 lg:text-base"
 				placeholder="Search"
 				onChange={handleSearchChange}

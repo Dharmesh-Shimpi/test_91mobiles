@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Sidebar from "./filterCategory";
 
@@ -9,15 +9,17 @@ export default function Filter() {
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
 	const [selectedIndex, setSelectedIndex] = useState(0);
-	const [isLoading, setIsLoading] = useState(false); // State for loading
+	const [isLoading, setIsLoading] = useState(false);
+	const [isPending, startTransition] = useTransition();
 
 	useEffect(() => {
-		setIsLoading(true); // Start loading
+		setIsLoading(true);
 		const params = new URLSearchParams(searchParams);
 		params.set("filter", encodeURIComponent(selectedIndex));
-		router.replace(`/${pathname}?${params.toString()}`, { scroll: false });
+		startTransition(() => {
+			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		});
 		setIsLoading(false);
-
 	}, [selectedIndex, router, searchParams, pathname]);
 
 	const filterOptions = [
@@ -34,7 +36,7 @@ export default function Filter() {
 
 	return (
 		<div className="flex gap-4 phone-sm:flex-col lg:flex-row">
-			{isLoading ? ( // Show loading skeleton
+			{isLoading ? (
 				<>
 					<div className="skeleton w-24 h-6 bg-gray-300 animate-pulse" />
 					<div className="skeleton w-24 h-6 bg-gray-300 animate-pulse" />
@@ -45,6 +47,7 @@ export default function Filter() {
 			) : (
 				filterOptions.map((option, index) => (
 					<div
+						searching={isPending ? "" : undefined}
 						key={index}
 						className={`cursor-pointer text-sm lg:text-base ${
 							selectedIndex === index

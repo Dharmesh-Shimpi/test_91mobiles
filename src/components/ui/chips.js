@@ -20,49 +20,31 @@ const Chips = ({ category, brand }) => {
 		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 	};
 
-	let selectedCategories = null;
-	let selectedBrands = null;
-
-	if (category) {
-		selectedCategories = Array.isArray(category) ? category : [category];
-	}
-	if (brand) {
-		selectedBrands = Array.isArray(brand) ? brand : [brand];
-	}
+	const combinedItems = [
+		...(Array.isArray(category)
+			? category.map((item) => ({ ...item, type: "category" }))
+			: []),
+		...(Array.isArray(brand)
+			? brand.map((item) => ({ ...item, type: "brand" }))
+			: []),
+	];
 
 	return (
 		<div className="flex flex-wrap gap-2 p-2 h-fit w-fit">
-			{/* Render chips for categories */}
-			{(Array.isArray(selectedCategories) &&
-				selectedCategories.map((item, i) => (
-					<div
-						key={i}
-						className="flex items-center bg-blue-200 text-blue-800 rounded-lg px-3 py-1 text-sm"
+			{combinedItems.map((item, i) => (
+				<div
+					key={i}
+					className="flex items-center bg-blue-200 text-blue-800 rounded-lg px-3 py-1 text-sm"
+				>
+					<span>{item.name}</span>
+					<button
+						className="ml-2 text-blue-600 hover:text-blue-800"
+						onClick={() => handleRemove(item.type, item[`${item.type}_id`])}
 					>
-						<span>{item}</span>
-						<button
-							className="ml-2 text-blue-600 hover:text-blue-800"
-							onClick={() => handleRemove("category", item)}
-						>
-							&times;
-						</button>
-					</div>
-				))) ||
-				(Array.isArray(selectedBrands) &&
-					selectedBrands.map((item, i) => (
-						<div
-							key={i}
-							className="flex items-center bg-blue-200 text-blue-800 rounded-lg px-3 py-1 text-sm"
-						>
-							<span>{item}</span>
-							<button
-								className="ml-2 text-blue-600 hover:text-blue-800"
-								onClick={() => handleRemove("brand", item)}
-							>
-								&times;
-							</button>
-						</div>
-					)))}
+						&times;
+					</button>
+				</div>
+			))}
 		</div>
 	);
 };
