@@ -17,7 +17,10 @@ export default async function Home({ searchParams }) {
 	// console.log(filter, search, category, brand);
 	filter = Number(filter);
 	return (
-		<main className="flex flex-col items-center group">
+		<main className="flex flex-col items-center group ">
+			<div className="hidden group-has-[next]:block">
+				<Loading />
+			</div>
 			{/* <Suspense fallback={<Loading />}>
 				<Bulletin combinedData={filteredData} />
 			</Suspense> */}

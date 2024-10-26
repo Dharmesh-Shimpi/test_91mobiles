@@ -7,10 +7,18 @@ const OverlayButton = ({ slug }) => {
 	const router = useRouter();
 	const [isPending, transition] = useTransition();
 	const handleClick = () => {
-		transition(()=> {router.replace(`/${slug}`)});
+		transition(() => {
+			router.push(`/${slug}`);
+		});
 	};
 
-	return <div className="absolute inset-0 z-10 cursor-pointer" onClick={handleClick}></div>;
+	return (
+		<div
+			next={isPending ? "a" : undefined}
+			className="absolute inset-0 z-10 cursor-pointer"
+			onClick={handleClick}
+		></div>
+	);
 };
 
 export default OverlayButton;
