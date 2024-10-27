@@ -38,7 +38,7 @@ export default function Remaining({ initialData }) {
 								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							/>
 						</div>
-						<div className="bg-slate-100 p-3 flex flex-col justify-between h-1/4 w-full">
+						<div className="bg-slate-100 p-2 flex flex-col justify-between h-1/4 w-full">
 							<div className="font-bold text-center line-clamp-2">
 								{item.title}
 							</div>
