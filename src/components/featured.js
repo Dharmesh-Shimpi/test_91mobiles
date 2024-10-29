@@ -13,7 +13,7 @@ export default async function Featured() {
 		.slice(0, 5);
 
 	return (
-		<div className="w-full flex flex-col md:flex-row gap-4 px-4 md:px-16 md:gap-1">
+		<div className="w-full flex flex-col md:flex-row gap-4 px-4 md:px-16 md:gap-1 relative">
 			{/* Featured Section */}
 			<div className="w-full md:w-1/2 flex flex-col">
 				<div className="border-l-4 px-3 font-bold border-blue-500 my-5">
@@ -23,13 +23,11 @@ export default async function Featured() {
 					<Image
 						src={featured[0].image_url}
 						alt="Featured"
-						className="object-cover relative"
-						height={150}
-						width={250}
+						className="object-contain"
+						fill
 						priority
 						quality={10}
-						placeholder="blur"
-						blurDataURL={featured[0].image_url}
+						sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw"
 					/>
 					<OverlayButton slug={featured[0].slug} />
 					<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-neutral-600">
@@ -57,11 +55,9 @@ export default async function Featured() {
 								src={item.image_url}
 								alt={item.title}
 								className="object-contain"
-								height={150}
-								width={150}
+								fill
 								quality={10}
-								placeholder="blur"
-								blurDataURL={item.image_url}
+								sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw"
 							/>
 							<OverlayButton slug={item.slug} />
 							<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-neutral-600">

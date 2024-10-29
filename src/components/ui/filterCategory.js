@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useTransition } from "react";
 
-export default function Sidebar({ categories, brands, category, brand }) {
+export default function Sidebar({ categories, brands }) {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const pathname = usePathname();
@@ -17,9 +17,7 @@ export default function Sidebar({ categories, brands, category, brand }) {
 			params.append(name, value);
 		} else {
 			// Remove the unchecked value from the URLSearchParams
-			const updatedParams = params
-				.getAll(name)
-				.filter((paramValue) => paramValue !== value);
+			const updatedParams = params.getAll(name).filter((paramValue) => paramValue !== value);
 			params.delete(name);
 			updatedParams.forEach((paramValue) => params.append(name, paramValue));
 		}

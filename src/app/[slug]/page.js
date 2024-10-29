@@ -2,11 +2,11 @@ import Image from "next/image";
 import { Suspense } from "react";
 import ShareButton from "@/app/[slug]/shareButton";
 import { fetchWithAuth } from "@/utils/fetchHelper";
-import { fetchArticles } from "@/utils/fetchArticles";
+// import { fetchArticles } from "@/utils/fetchArticles";
 import data from "@/utils/data";
 import "./style.css";
 import RelatedServer from "./relatedServer";
-import Loading from "../loading";
+import Loading from "../../components/ui/loading";
 
 // export async function generateStaticParams() {
 // 	const articles = await fetchArticles();
@@ -56,6 +56,7 @@ export default async function ArticleLayout({ params }) {
 								src={article.image_url}
 								alt={article.title}
 								className="mb-6 rounded-lg object-contain relative"
+								priority
 								height={300}
 								width={300}
 								quality={10}
@@ -72,27 +73,31 @@ export default async function ArticleLayout({ params }) {
 								<div dangerouslySetInnerHTML={{ __html: article.content2 }} />
 							)}
 							<div className="flex justify-center items-center">
-								<Image
-									src={article.image_url1}
-									alt={article.title}
-									className="mb-6 rounded-lg object-contain relative"
-									height={300}
-									width={300}
-									quality={10}
-								/>
+								{article.image_url1 && (
+									<Image
+										src={article.image_url1}
+										alt={article.title}
+										className="mb-6 rounded-lg object-contain relative"
+										height={300}
+										width={300}
+										quality={10}
+									/>
+								)}
 							</div>
 							{article.content3 && (
 								<div dangerouslySetInnerHTML={{ __html: article.content3 }} />
 							)}
 							<div className="flex justify-center items-center">
-								<Image
-									src={article.image_url2}
-									alt={article.title}
-									className="mb-6 rounded-lg object-contain relative"
-									height={300}
-									width={300}
-									quality={10}
-								/>
+								{article.image_url2 && (
+									<Image
+										src={article.image_url2}
+										alt={article.title}
+										className="mb-6 rounded-lg object-contain relative"
+										height={300}
+										width={300}
+										quality={10}
+									/>
+								)}
 							</div>
 							{article.content4 && (
 								<div dangerouslySetInnerHTML={{ __html: article.content4 }} />

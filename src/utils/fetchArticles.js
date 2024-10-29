@@ -3,14 +3,14 @@ import { fetchWithAuth } from "./fetchHelper";
 export async function fetchArticles() {
 	let allResults = [];
 	let currentPage = 1;
-	let currentUrl = `http://13.200.221.80:8000/api/articles/?page=${currentPage}`;
+	let currentUrl = `${process.env.NEXT_PUBLIC_ARTICLES}/?page=${currentPage}`;
 
 	try {
 		while (true) {
 			const { next, results } = await fetchWithAuth(currentUrl);
 
 			if (!results || results.length === 0) {
-				break; 
+				break;
 			}
 
 			allResults = allResults.concat(
@@ -53,7 +53,7 @@ export async function fetchArticles() {
 
 export async function fetchCategories() {
 	try {
-		return await fetchWithAuth("http://13.200.221.80:8000/api/categories/");
+		return await fetchWithAuth(process.env.NEXT_PUBLIC_CATEGORIES);
 	} catch (error) {
 		console.error("An error occurred while fetching categories:", error);
 		throw new Error("An error occurred while fetching categories.");
@@ -62,7 +62,7 @@ export async function fetchCategories() {
 
 export async function fetchBrands() {
 	try {
-		return await fetchWithAuth("http://13.200.221.80:8000/api/brands/");
+		return await fetchWithAuth(process.env.NEXT_PUBLIC_BRANDS);
 	} catch (error) {
 		console.error("An error occurred while fetching brands:", error);
 		throw new Error("An error occurred while fetching brands.");

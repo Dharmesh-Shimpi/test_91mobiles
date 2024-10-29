@@ -14,30 +14,20 @@ export default function ArticleSkeleton() {
 							<div className="h-4 bg-gray-300 rounded w-1/2"></div>
 							<div className="h-8 bg-gray-300 rounded w-10"></div>
 						</div>
-
-						<div className="flex justify-center items-center mb-6">
-							<div className="h-48 w-48 bg-gray-300 rounded-lg"></div>
-						</div>
-
-						<div className="space-y-3 mb-6">
-							<div className="h-4 bg-gray-300 rounded w-full"></div>
-							<div className="h-4 bg-gray-300 rounded w-5/6"></div>
-							<div className="h-4 bg-gray-300 rounded w-4/5"></div>
-						</div>
-
-						<div className="space-y-4 mb-6">
-							<div className="h-4 bg-gray-300 rounded w-full"></div>
-							<div className="h-4 bg-gray-300 rounded w-5/6"></div>
-							<div className="flex justify-center items-center">
-								<div className="h-48 w-48 bg-gray-300 rounded-lg"></div>
+						{[...Array(4)].map((_, i) => (
+							<div key={i}>
+								<div className="flex justify-center items-center mb-6">
+									<div className="h-48 w-48 md:h-80 md:w-80 bg-gray-300 rounded-lg"></div>
+								</div>
+								{[...Array(4)].map((_, index) => (
+									<div key={index} className="space-y-3 mb-6">
+										<div className="h-4 bg-gray-300 rounded w-full"></div>
+										<div className="h-4 bg-gray-300 rounded w-5/6"></div>
+										<div className="h-4 bg-gray-300 rounded w-4/5"></div>
+									</div>
+								))}{" "}
 							</div>
-							<div className="h-4 bg-gray-300 rounded w-full"></div>
-							<div className="h-4 bg-gray-300 rounded w-4/5"></div>
-							<div className="flex justify-center items-center">
-								<div className="h-48 w-48 bg-gray-300 rounded-lg"></div>
-							</div>
-							<div className="h-4 bg-gray-300 rounded w-5/6"></div>
-						</div>
+						))}
 					</div>
 				</div>
 

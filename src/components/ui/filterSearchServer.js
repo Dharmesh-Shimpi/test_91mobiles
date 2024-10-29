@@ -1,9 +1,9 @@
 import { fetchBrands, fetchCategories } from "@/utils/fetchArticles";
-import Sidebar from "./filterCategory";
+import Filter from "./filterSearch";
 
-export default async function sidebarServer() {
+export default async function FilterSearchServer() {
 	const categories = await fetchCategories();
 	const brands = await fetchBrands();
 
-	return <Sidebar categories={categories} brands={brands} />;
+	return <Filter categories={categories} brands={brands} />;
 }

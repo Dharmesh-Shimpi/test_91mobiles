@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useTransition } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import Sidebar from "./sidebarServer";
+import Sidebar from "./filterCategory";
 
-export default function Filter() {
+export default function Filter({ categories, brands }) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
@@ -61,7 +61,7 @@ export default function Filter() {
 				))
 			)}
 			<div className="phone-sm:block lg:hidden">
-				<Sidebar />
+				<Sidebar categories={categories} brands={brands} />
 			</div>
 		</div>
 	);

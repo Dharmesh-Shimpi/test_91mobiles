@@ -8,9 +8,9 @@ import { fetchArticles } from "@/utils/fetchArticles";
 export default async function TopAndMain({ filter, search, category, brand }) {
 	let data = await fetchArticles();
 	// console.log(data);
-	// console.log(filter, search, category, brand);
-	// console.log(initialData);
+	// console.log(typeof filter);
 	let initialData = filtering(filter, search, category, brand, data);
+	// console.log(initialData);
 
 	return (
 		<>
@@ -29,9 +29,7 @@ export default async function TopAndMain({ filter, search, category, brand }) {
 									alt={item.title}
 									fill
 									quality={5}
-									placeholder="blur"
-									blurDataURL={item.image_url}
-									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+									sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw"
 								/>
 							</div>
 							<div className="bg-slate-100 p-2 flex flex-col justify-between h-1/4 w-full">
@@ -69,9 +67,7 @@ export default async function TopAndMain({ filter, search, category, brand }) {
 									alt={item.title}
 									fill
 									quality={5}
-									placeholder="blur"
-									blurDataURL={item.image_url}
-									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+									sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw"
 								/>
 							</div>
 							<div className="bg-slate-100 p-2 flex flex-col justify-between h-1/4 w-full">

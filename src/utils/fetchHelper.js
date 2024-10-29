@@ -6,7 +6,11 @@ export const fetchWithAuth = async (url) => {
 			cache: "force-cache",
 			method: "GET",
 			headers: {
-				Authorization: "Basic " + btoa(`Abhinay:mobiles@32`),
+				Authorization:
+					"Basic " +
+					btoa(
+						`${process.env.NEXT_PUBLIC_USERNAME}:${process.env.NEXT_PUBLIC_PASSWORD}`
+					),
 			},
 		});
 

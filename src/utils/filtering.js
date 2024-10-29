@@ -7,11 +7,11 @@ export default function filtering(
 ) {
 	// console.log(filter, search, category, brand, filteredData);
 	if (filter !== undefined) {
-		if (filter !== 0) {
+		if (filter != 0) {
 			filteredData = filteredData.filter((item) => item.tags.includes(filter));
 		}
 	}
-
+	// console.log(filteredData);
 	if (search !== undefined) {
 		filteredData = filteredData.filter((item) =>
 			item.title.toLowerCase().includes(search.toLowerCase())
