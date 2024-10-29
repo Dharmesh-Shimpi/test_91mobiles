@@ -6,6 +6,7 @@ import filtering from "@/utils/filtering";
 import { fetchArticles } from "@/utils/fetchArticles";
 
 export default async function TopAndMain({ filter, search, category, brand }) {
+	// await new Promise((resolve) => setTimeout(resolve, 2000));
 	let data = await fetchArticles();
 	// console.log(data);
 	// console.log(typeof filter);
@@ -15,7 +16,7 @@ export default async function TopAndMain({ filter, search, category, brand }) {
 	return (
 		<>
 			{/* Top eight items */}
-			<div className="flex flex-wrap gap-2 justify-center items-center w-full mb-6 xl:gap-8">
+			<div className="flex flex-wrap gap-2 justify-center items-center w-full mb-6 xl:gap-8 ">
 				{Array.isArray(initialData) &&
 					initialData.slice(0, 8).map((item) => (
 						<div
@@ -24,9 +25,11 @@ export default async function TopAndMain({ filter, search, category, brand }) {
 						>
 							<div className="h-3/4 w-full flex justify-center items-center relative">
 								<Image
+									as="image"
 									className=" object-contain"
 									src={item.image_url}
 									alt={item.title}
+									priority
 									fill
 									quality={5}
 									sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw"

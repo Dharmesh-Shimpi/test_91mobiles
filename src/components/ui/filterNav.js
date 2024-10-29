@@ -35,7 +35,10 @@ export default function Filter({ categories, brands }) {
 	};
 
 	return (
-		<div className="flex gap-4 phone-sm:flex-col lg:flex-row">
+		<div
+			searching={isPending ? "" : undefined}
+			className="flex gap-4 phone-sm:flex-col lg:flex-row"
+		>
 			{isLoading ? (
 				<>
 					<div className="skeleton w-24 h-6 bg-gray-300 animate-pulse" />
@@ -47,7 +50,6 @@ export default function Filter({ categories, brands }) {
 			) : (
 				filterOptions.map((option, index) => (
 					<div
-						searching={isPending ? "" : undefined}
 						key={index}
 						className={`cursor-pointer text-sm lg:text-base ${
 							selectedIndex === index

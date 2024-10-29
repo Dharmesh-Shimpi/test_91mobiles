@@ -12,9 +12,10 @@ import FilterSearchServer from "@/components/ui/filterSearchServer";
 export default function Home({ searchParams }) {
 	let { filter, search, category, brand } = searchParams;
 	filter = Number(filter);
+
 	return (
 		<main className="flex flex-col items-center group">
-			<div className="hidden group-has-[next]:block">
+			<div className="hidden group-has-[[next]]:block">
 				<Loading />
 			</div>
 			<section className="py-10 w-full flex justify-center items-center bg-slate-100 overflow-hidden">
@@ -36,7 +37,7 @@ export default function Home({ searchParams }) {
 
 				<div className="flex flex-col flex-grow">
 					<Chips category={category} brand={brand} />
-					<div className="w-full flex flex-col items-center xl:p-1 group-has-[searching]:animate-pulse">
+					<div className="w-full flex flex-col items-center xl:p-1 group-has-[[searching]]:animate-pulse">
 						<Suspense fallback={<TopAndMainSkeleton />}>
 							<TopAndMain
 								filter={filter}

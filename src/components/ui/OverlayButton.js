@@ -14,7 +14,7 @@ const OverlayButton = ({ slug }) => {
 
 	return (
 		<div
-			next={isPending ? "a" : undefined}
+			next={isPending ? "" : undefined}
 			className="absolute inset-0 z-10 cursor-pointer"
 			onClick={handleClick}
 		></div>

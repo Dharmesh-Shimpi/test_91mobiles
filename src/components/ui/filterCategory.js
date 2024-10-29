@@ -17,7 +17,9 @@ export default function Sidebar({ categories, brands }) {
 			params.append(name, value);
 		} else {
 			// Remove the unchecked value from the URLSearchParams
-			const updatedParams = params.getAll(name).filter((paramValue) => paramValue !== value);
+			const updatedParams = params
+				.getAll(name)
+				.filter((paramValue) => paramValue !== value);
 			params.delete(name);
 			updatedParams.forEach((paramValue) => params.append(name, paramValue));
 		}
@@ -31,7 +33,9 @@ export default function Sidebar({ categories, brands }) {
 		const params = new URLSearchParams(searchParams);
 		params.delete("category");
 		params.delete("brand");
-		router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		startTransition(() => {
+			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+		});
 	};
 
 	const isChecked = (name, id) => {

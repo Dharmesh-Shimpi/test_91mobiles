@@ -21,6 +21,7 @@ export default async function Featured() {
 				</div>
 				<div className="relative overflow-hidden rounded-xl w-full h-48 md:h-[264px] flex justify-center items-center">
 					<Image
+						as="image"
 						src={featured[0].image_url}
 						alt="Featured"
 						className="object-contain"
