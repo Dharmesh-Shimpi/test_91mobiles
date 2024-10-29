@@ -9,7 +9,7 @@ export const fetchWithAuth = async (url) => {
 				Authorization:
 					"Basic " +
 					btoa(
-						`${process.env.NEXT_PUBLIC_USERNAME}:${process.env.NEXT_PUBLIC_PASSWORD}`
+						`${process.env.USERNAME}:${process.env.PASSWORD}`
 					),
 			},
 		});
