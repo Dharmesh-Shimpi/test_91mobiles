@@ -12,7 +12,14 @@ export default function Filter() {
 	const [isPending, startTransition] = useTransition();
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	// const [selectedIndex, setSelectedIndex] = useOptimistic(0, (prev, next) => next);
-	console.log(selectedIndex);
+	// console.log(selectedIndex);
+	const params = new URLSearchParams(searchParams);
+	const check = params.get("filter");
+	if (!check) {
+		startTransition(() => {
+			router.replace(`${pathname}?filter=0`, { scroll: false });
+		});
+	}
 
 	const filterOptions = [
 		"All Articles",

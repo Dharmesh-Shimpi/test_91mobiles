@@ -54,22 +54,22 @@ const nextConfig = {
 			},
 		],
 	},
-	redirects: async () => {
-		return [
-			{
-				source: "/",
-				has: [
-					{
-						type: "query",
-						key: "filter",
-						value: "(?!0)",
-					},
-				],
-				destination: "/?filter=0",
-				permanent: false,
-			},
-		];
-	},
+	// redirects: async () => {
+	// 	return [
+	// 		{
+	// 			source: "/",
+	// 			has: [
+	// 				{
+	// 					type: "query",
+	// 					key: "filter",
+	// 					value: "(?!0)",
+	// 				},
+	// 			],
+	// 			destination: "/?filter=0",
+	// 			permanent: false,
+	// 		},
+	// 	];
+	// },
 };
 
 export default nextConfig;

@@ -3,7 +3,7 @@ import { fetchWithAuth } from "./fetchHelper";
 export async function fetchArticles() {
 	let allResults = [];
 	let currentPage = 1;
-	let currentUrl = `${process.env.ARTICLES}/?page=${currentPage}`;
+	let currentUrl = `${process.env.NEXT_PUBLIC_ARTICLES}/?page=${currentPage}`;
 
 	try {
 		while (true) {
@@ -53,7 +53,7 @@ export async function fetchArticles() {
 
 export async function fetchCategories() {
 	try {
-		return await fetchWithAuth(process.env.CATEGORIES);
+		return await fetchWithAuth(process.env.NEXT_PUBLIC_CATEGORIES);
 	} catch (error) {
 		console.error("An error occurred while fetching categories:", error);
 		throw new Error("An error occurred while fetching categories.");
@@ -62,7 +62,7 @@ export async function fetchCategories() {
 
 export async function fetchBrands() {
 	try {
-		return await fetchWithAuth(process.env.BRANDS);
+		return await fetchWithAuth(process.env.NEXT_PUBLIC_BRANDS);
 	} catch (error) {
 		console.error("An error occurred while fetching brands:", error);
 		throw new Error("An error occurred while fetching brands.");
