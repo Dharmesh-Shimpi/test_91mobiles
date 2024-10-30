@@ -35,7 +35,7 @@ export default function Remaining({ initialData }) {
 								alt={item.title}
 								fill
 								quality={5}
-								sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw"
+								sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw"
 							/>
 						</div>
 						<div className="bg-slate-100 p-2 flex flex-col justify-between h-1/4 w-full">
