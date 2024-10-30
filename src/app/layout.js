@@ -1,6 +1,5 @@
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
-import ReduxProvider from "@/redux/storeProvider";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -16,11 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en" suppressHydrationWarning className="scroll-smooth">
-			<ReduxProvider>
-				<body className={cn("font-sans antialiased", fontSans.variable)}>
-					{children}
-				</body>
-			</ReduxProvider>
+			<body className={cn("font-sans antialiased", fontSans.variable)}>
+				{children}
+			</body>
 		</html>
 	);
 }

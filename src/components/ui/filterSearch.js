@@ -1,7 +1,6 @@
 "use client";
 
-import { memo } from "react";
-import { useTransition, useState, useEffect } from "react";
+import { useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Filter from "./filterNav";
 import { VscSettings } from "react-icons/vsc";
@@ -13,13 +12,10 @@ export default function FilterSearch({ categories, brands }) {
 	const pathname = usePathname();
 	const [isPending, startTransition] = useTransition();
 
-	const [searchTerm, setSearchTerm] = useState("");
-
 	const handleInputChange = (e) => {
-		setSearchTerm(e.target.value);
 		const params = new URLSearchParams(searchParams);
-		if (searchTerm) {
-			params.set("search", encodeURIComponent(searchTerm));
+		if (e.target.value) {
+			params.set("search", encodeURIComponent(e.target.value));
 		} else {
 			params.delete("search");
 		}
@@ -38,7 +34,6 @@ export default function FilterSearch({ categories, brands }) {
 
 			{/* Search Input */}
 			<input
-				value={searchTerm}
 				onChange={handleInputChange}
 				searching={isPending ? "" : undefined}
 				className="rounded-md border text-black px-3 h-8 sm:w-40 sm:text-xs md:w-96 lg:w-80 lg:text-base"
