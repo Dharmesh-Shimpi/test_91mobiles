@@ -30,7 +30,7 @@ export default function Filter() {
 			setSelectedIndex(index);
 			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
-			console.log(selectedIndex);
+			// console.log(selectedIndex);
 		});
 	};
 
