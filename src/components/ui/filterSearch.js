@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Filter from "./filterNav";
 import { VscSettings } from "react-icons/vsc";
-import { Sheet, SheetContent, SheetTrigger } from "./sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "./sheet";
 
 export default function FilterSearch({ categories, brands }) {
 	const router = useRouter();
@@ -43,7 +43,9 @@ export default function FilterSearch({ categories, brands }) {
 			{/* Mobile Sheet Trigger */}
 			<Sheet>
 				<SheetTrigger className="phone-sm:inline lg:hidden">
-					<VscSettings className="text-2xl cursor-pointer" />
+					<SheetTitle>
+						<VscSettings className="text-2xl cursor-pointer" />
+					</SheetTitle>
 				</SheetTrigger>
 				<SheetContent className="flex w-full overflow-scroll">
 					<Filter categories={categories} brands={brands} />
