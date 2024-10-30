@@ -1,8 +1,7 @@
-// components/ui/filterSearch.js
-
 "use client";
 
-import { useTransition } from "react";
+import { memo } from "react";
+import { useTransition, useState, useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Filter from "./filterNav";
 import { VscSettings } from "react-icons/vsc";
@@ -14,10 +13,11 @@ export default function FilterSearch({ categories, brands }) {
 	const pathname = usePathname();
 	const [isPending, startTransition] = useTransition();
 
-	const handleSearchChange = (e) => {
-		const searchTerm = e.target.value;
-		const params = new URLSearchParams(searchParams);
+	const [searchTerm, setSearchTerm] = useState("");
 
+	const handleInputChange = (e) => {
+		setSearchTerm(e.target.value);
+		const params = new URLSearchParams(searchParams);
 		if (searchTerm) {
 			params.set("search", encodeURIComponent(searchTerm));
 		} else {
@@ -32,16 +32,17 @@ export default function FilterSearch({ categories, brands }) {
 	return (
 		<>
 			{/* Desktop Filter */}
-			<div className="phone-sm:hidden lg:block ">
+			<div className="phone-sm:hidden lg:block">
 				<Filter categories={categories} brands={brands} />
 			</div>
 
 			{/* Search Input */}
 			<input
+				value={searchTerm}
+				onChange={handleInputChange}
 				searching={isPending ? "" : undefined}
 				className="rounded-md border text-black px-3 h-8 sm:w-40 sm:text-xs md:w-96 lg:w-80 lg:text-base"
 				placeholder="Search"
-				onChange={handleSearchChange}
 			/>
 
 			{/* Mobile Sheet Trigger */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useTransition } from "react";
+import { useTransition, useOptimistic } from "react";
 
 export default function Sidebar({ categories, brands }) {
 	const searchParams = useSearchParams();
@@ -9,22 +9,41 @@ export default function Sidebar({ categories, brands }) {
 	const pathname = usePathname();
 	const [isPending, startTransition] = useTransition();
 
+	const [selectedCategories, setSelectedCategories] = useOptimistic([], {
+		rollbackOnError: true,
+	});
+	const [selectedBrands, setSelectedBrands] = useOptimistic([], {
+		rollbackOnError: true,
+	});
+
 	const handleCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
 		const params = new URLSearchParams(searchParams);
 
-		if (checked) {
-			params.append(name, value);
-		} else {
-			// Remove the unchecked value from the URLSearchParams
-			const updatedParams = params
-				.getAll(name)
-				.filter((paramValue) => paramValue !== value);
-			params.delete(name);
-			updatedParams.forEach((paramValue) => params.append(name, paramValue));
-		}
-
 		startTransition(() => {
+			if (checked) {
+				if (name === "category") {
+					setSelectedCategories((prev) => [...prev, value]);
+				} else {
+					setSelectedBrands((prev) => [...prev, value]);
+				}
+				params.append(name, value);
+			} else {
+				const updatedParams = params
+					.getAll(name)
+					.filter((paramValue) => paramValue !== value);
+				params.delete(name);
+				updatedParams.forEach((paramValue) => params.append(name, paramValue));
+
+				if (name === "category") {
+					setSelectedCategories((prev) =>
+						prev.filter((item) => item !== value)
+					);
+				} else {
+					setSelectedBrands((prev) => prev.filter((item) => item !== value));
+				}
+			}
+
 			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 		});
 	};
@@ -34,13 +53,19 @@ export default function Sidebar({ categories, brands }) {
 		params.delete("category");
 		params.delete("brand");
 		startTransition(() => {
+			setSelectedCategories([]);
+			setSelectedBrands([]);
 			router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 		});
 	};
 
 	const isChecked = (name, id) => {
 		const selectedItems = searchParams.getAll(name);
-		return selectedItems.includes(id);
+		return (
+			selectedItems.includes(id) ||
+			(name === "category" && selectedCategories.includes(id)) ||
+			(name === "brand" && selectedBrands.includes(id))
+		);
 	};
 
 	return (

@@ -14,11 +14,12 @@ import Loading from "../../components/ui/loading";
 // 	return slugs.map((slug) => ({ slug }));
 // }
 
-export default async function ArticleLayout({ params }) {
-	const { slug } = params;
-	let article = null;
+export default async function ArticleLayout(props) {
+    const params = await props.params;
+    const { slug } = params;
+    let article = null;
 
-	try {
+    try {
 		article = await fetchWithAuth(
 			`http://13.200.221.80:8000/api/articlesbyslug/${slug}`
 		);
@@ -28,7 +29,7 @@ export default async function ArticleLayout({ params }) {
 		console.log(article);
 	}
 
-	return (
+    return (
 		<div
 			style={{ backgroundColor: "#f2f2f2" }}
 			className="w-full phone-sm:p-0 md:p-8 lg:px-12"

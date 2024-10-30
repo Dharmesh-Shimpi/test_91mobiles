@@ -9,11 +9,12 @@ import TopAndMainSkeleton from "@/components/mainSkeleton";
 import SidebarSkeleton from "@/components/ui/sidebarSkeleton";
 import FilterSearchServer from "@/components/ui/filterSearchServer";
 
-export default function Home({ searchParams }) {
-	let { filter, search, category, brand } = searchParams;
-	filter = Number(filter);
+export default async function Home(props) {
+    const searchParams = await props.searchParams;
+    let { filter, search, category, brand } = searchParams;
+    filter = Number(filter);
 
-	return (
+    return (
 		<main className="flex flex-col items-center group">
 			<div className="hidden group-has-[[next]]:block">
 				<Loading />
