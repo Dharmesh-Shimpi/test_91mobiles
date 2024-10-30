@@ -27,8 +27,8 @@ export default async function Featured() {
 						className="object-contain"
 						fill
 						priority
-						quality={10}
-						sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
+						quality={50}
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 					/>
 					<OverlayButton slug={featured[0].slug} />
 					<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-neutral-600">
@@ -57,8 +57,8 @@ export default async function Featured() {
 								alt={item.title}
 								className="object-contain"
 								fill
-								quality={10}
-								sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
+								quality={50}
+								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							/>
 							<OverlayButton slug={item.slug} />
 							<div className="flex justify-end items-start flex-col absolute bottom-0 left-0 w-full p-2 h-full bg-gradient-to-t from-neutral-600">
